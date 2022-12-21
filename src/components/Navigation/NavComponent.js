@@ -1,27 +1,36 @@
 import './Nav.css'
 
-const NavComponent = ({ isAuth, handleAuthState }) => {
+const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
+    
     const handleLogout = () => {
         localStorage.clear()
         window.location.reload()
     }
+
+    const handleState = (e) => setMainState(e.target.name)
+
     return (
         <div className='nav'>
-            <button>
+            <button name='request' onClick={handleState}>
+                Home
+            </button>
+            <button name='help' onClick={handleState}>
                 Help
             </button>
-             <button>
+             <button name='collections' onClick={handleState}>
                 Collections
+            </button>
+            <button name='profile' onClick={handleState}>
+                Profile
             </button>
             {isAuth ?   
             <button onClick={handleLogout}>
                 Logout
             </button> :
-            <button onClick={handleLogout} name="login" onClick={handleAuthState}>
+            <button name="login" onClick={handleAuthState}>
               Login
             </button>
-            }
-         
+            }         
         </div>
     )
 }

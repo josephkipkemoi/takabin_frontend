@@ -13,6 +13,7 @@ const LoginComponent = ({ handleAuthState }) => {
     const handleSubmit = () => {
         if(userDetails) {
             localStorage.setItem('auth-user', true)
+            window.location.reload()
         }
     }
 

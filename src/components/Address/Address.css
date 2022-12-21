@@ -1,0 +1,27 @@
+.address-container {
+    position: absolute;
+    z-index: 5;
+    background-color: #fff;
+    height: auto;
+    padding: 1rem;
+    width: 100%;
+}
+.address-container h2 {
+    color: #191970;
+}
+.address-container button {
+    padding: 1rem;
+    border: none;
+    background-color: #191970;
+    color: #fff;
+    cursor: pointer;
+}
+.address-container-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.address-container-input input {
+    padding: 1rem;
+    margin: .5rem;
+}
+ 

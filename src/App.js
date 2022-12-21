@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import AuthComponent from './components/Auth/AuthComponent';
+import HelpComponent from './components/Help/HelpComponent';
+import MainComponent from './components/Main/MainComponent';
 import NavComponent from './components/Navigation/NavComponent';
 
 import config from './config.json';
@@ -9,6 +11,7 @@ function App() {
   const [isAuth, setIsAuth] = useState(false)
 
   const [authState, setAuthState] = useState('landing')
+  const [mainState, setMainState] = useState('request')
 
   const handleAuthState = (e) => setAuthState(e.target.name)
 
@@ -33,6 +36,12 @@ function App() {
           </i>
         </p>
       </header>
+      {(isAuth === true && mainState === 'request') &&
+        <MainComponent/>
+      }
+      
+      {mainState === 'help' && <HelpComponent/>}
+
       {isAuth === false &&
        <AuthComponent
         authState={authState}
@@ -40,8 +49,9 @@ function App() {
        />
       }
       <NavComponent
-      isAuth={isAuth}
-      handleAuthState={handleAuthState}
+        isAuth={isAuth}
+        handleAuthState={handleAuthState}
+        setMainState={setMainState}
       />
     </div>
   );
