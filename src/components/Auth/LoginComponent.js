@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+import axios from 'axios'
 const LoginComponent = ({ handleAuthState }) => {
     const [userDetails, setUserDetails] = useState({
         phone_number: '',
@@ -10,11 +10,9 @@ const LoginComponent = ({ handleAuthState }) => {
 
     const handleChange = (e) => setUserDetails(prev => ({...prev, [e.target.name] : e.target.value}))
 
-    const handleSubmit = () => {
-        if(userDetails) {
-            localStorage.setItem('auth-user', true)
-            window.location.reload()
-        }
+    const handleSubmit = async () => {
+        console.log(await axios.post('http://localhost:8000/api/v1/login', userDetails))
+       
     }
 
     return (

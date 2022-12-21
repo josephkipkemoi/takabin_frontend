@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import axios from "axios"
 import UpdateAddressComponent from "../Address/UpdateAddressComponent"
 import "./Main.css"
 
@@ -16,12 +17,11 @@ const MainComponent = () => {
         setCollectionRequested(true)
     }
 
-    const checkAddressStatus = (addressDetails) => {
-        if(addressDetails === false) {
-            return setAddressUpdated(false)
+    const checkAddressStatus = async (userId) => {
+        const res = await axios.get(`http://localhost:8000/api/v1/addresses/users/${userId}`)
+        if(res?.data?.id) {
+            setAddressUpdated(true)
         }
-
-        setAddressUpdated(true)
     }
 
     const handleUpdateAddress = () => {
@@ -29,8 +29,8 @@ const MainComponent = () => {
     }
 
     useEffect(() => {
-        const addressDetails = localStorage.getItem('user-address')
-        checkAddressStatus(Boolean(addressDetails))
+        const userId = JSON.parse(localStorage.getItem('auth-user')).id
+        checkAddressStatus(userId)
     }, [addressUpdated])
     return (
         <div className="main-container">

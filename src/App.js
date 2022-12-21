@@ -8,6 +8,7 @@ import MainComponent from './components/Main/MainComponent';
 import NavComponent from './components/Navigation/NavComponent';
 import ProfileComponent from './components/Profile/ProfileComponent';
 
+
 import config from './config.json';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
 
   const checkIsAuth = () => {
     const authUser = localStorage.getItem('auth-user')
+
     if(Boolean(authUser) === true) {
       setIsAuth(true)
     }

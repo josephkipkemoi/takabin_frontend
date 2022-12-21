@@ -1,7 +1,7 @@
 import { useState } from "react"
 import validateNumber from "../../hooks/validateNumber";
-import config from '../../config.json';
-
+// import axios from "../../lib/Axios";
+import axios from 'axios'
 const SignupComponent = ({ handleAuthState }) => {
 
     const [userDetails, setUserDetails] = useState({
@@ -39,7 +39,7 @@ const SignupComponent = ({ handleAuthState }) => {
 
     const handlePreviousStep = () => setSignupStep(prev => prev-=1)
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if(Boolean(password) === false) {
             setError('Password field is required')
             return false
@@ -61,9 +61,13 @@ const SignupComponent = ({ handleAuthState }) => {
 
         setError('')
         
-        // fetch(`${config.BACKEND_DEVELOPMENT_URL}/api/v1/collections/view`)
-        // .then(res => res.json())
-        // .then(data => console.log(data))
+        try {
+            const res = await axios.post('http://localhost:8000/api/v1/register?user_role=1', userDetails)
+            localStorage.setItem('auth-user', JSON.stringify(res.data.user))
+        } catch (error) {
+            console.error(error)
+        }
+       
     }
 
     return (

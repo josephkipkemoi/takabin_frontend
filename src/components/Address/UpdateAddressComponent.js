@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import './Address.css'
 
 const UpdateAddressComponent = () => {
     const [addressDetails, setAddressDetails] = useState({
+        user_id: null,
         county: '',
         sub_county: '',
         estate: '',
@@ -13,11 +15,23 @@ const UpdateAddressComponent = () => {
 
     const handleChange = (e) => setAddressDetails(prev => ({...prev, [e.target.name]: e.target.value}))
 
-    const submitAddress = () => {
-        if(addressDetails) {
-            localStorage.setItem('user-address', true)
-        }
+    const submitAddress = async () => {
+        try {
+            const res = await axios.post("http://localhost:8000/api/v1/address", addressDetails)
+        
+            if(res.status === 201) {
+                localStorage.setItem('user-address', true)
+            } 
+        } catch (error) {
+            console.error(error)
+        }      
     }
+
+    useEffect(() => {
+        const user_id = JSON.parse(localStorage.getItem('auth-user')).id
+        setAddressDetails(prev => ({...prev, user_id}))
+    }, [])
+    
     return (
         <div className='address-container'>
             <h2>Address Information</h2>
