@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import AuthComponent from './components/Auth/AuthComponent';
 import CollectionComponent from './components/Collections/CollectionComponent';
+import GeolocationComponent from './components/GeoLocation/GeoLocationComponent';
 import HelpComponent from './components/Help/HelpComponent';
 import MainComponent from './components/Main/MainComponent';
 import NavComponent from './components/Navigation/NavComponent';
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <div>
+      <GeolocationComponent/>
       <header className='app-header'>
         <h1>{config.APP_NAME}</h1>
         <p>

@@ -1,5 +1,6 @@
 import { useState } from "react"
-import validateNumber from "../hooks/validateNumber";
+import validateNumber from "../../hooks/validateNumber";
+import config from '../../config.json';
 
 const SignupComponent = ({ handleAuthState }) => {
 
@@ -59,10 +60,10 @@ const SignupComponent = ({ handleAuthState }) => {
         }
 
         setError('')
-
-        if(userDetails) {
-            localStorage.setItem('auth-user', true)
-        }
+        
+        // fetch(`${config.BACKEND_DEVELOPMENT_URL}/api/v1/collections/view`)
+        // .then(res => res.json())
+        // .then(data => console.log(data))
     }
 
     return (

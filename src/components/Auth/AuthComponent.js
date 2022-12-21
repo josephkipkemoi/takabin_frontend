@@ -1,7 +1,7 @@
 import { useState } from "react"
 import './Auth.css';
 import LoginComponent from "./LoginComponent";
-import SignupComponent from "../SignupComponent";
+import SignupComponent from "./SignupComponent";
 
 export default function AuthComponent({ authState, handleAuthState }) {
   
