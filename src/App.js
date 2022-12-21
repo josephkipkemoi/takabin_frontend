@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import AuthComponent from './components/Auth/AuthComponent';
+import CollectionComponent from './components/Collections/CollectionComponent';
 import HelpComponent from './components/Help/HelpComponent';
 import MainComponent from './components/Main/MainComponent';
 import NavComponent from './components/Navigation/NavComponent';
+import ProfileComponent from './components/Profile/ProfileComponent';
 
 import config from './config.json';
 
@@ -36,11 +38,6 @@ function App() {
           </i>
         </p>
       </header>
-      {(isAuth === true && mainState === 'request') &&
-        <MainComponent/>
-      }
-      
-      {mainState === 'help' && <HelpComponent/>}
 
       {isAuth === false &&
        <AuthComponent
@@ -48,6 +45,22 @@ function App() {
         handleAuthState={handleAuthState}
        />
       }
+
+      {(isAuth === true && mainState === 'request') &&
+        <MainComponent/>
+      }
+
+      {(isAuth === true && mainState === 'collections') &&
+        <CollectionComponent/>
+      }
+
+      {(isAuth === true && mainState === 'profile') &&
+        <ProfileComponent/>
+      }
+
+      {mainState === 'help' && <HelpComponent/>}
+
+  
       <NavComponent
         isAuth={isAuth}
         handleAuthState={handleAuthState}
