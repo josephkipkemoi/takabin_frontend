@@ -4,12 +4,12 @@ import AuthComponent from './components/Auth/AuthComponent';
 import CollectionComponent from './components/Collections/CollectionComponent';
 import GeolocationComponent from './components/GeoLocation/GeoLocationComponent';
 import HelpComponent from './components/Help/HelpComponent';
-import MainComponent from './components/Main/MainComponent';
 import NavComponent from './components/Navigation/NavComponent';
 import ProfileComponent from './components/Profile/ProfileComponent';
 
 
 import config from './config.json';
+import Collectee from './pages/Collectee/Collectee';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
@@ -42,7 +42,7 @@ function App() {
           </i>
         </p>
       </header>
-      
+
       {isAuth === false &&
        <AuthComponent
         authState={authState}
@@ -50,8 +50,11 @@ function App() {
        />
       }
 
-      {(isAuth === true && mainState === 'request') &&
-        <MainComponent/>
+      {isAuth === true &&
+        <Collectee
+        isAuth={isAuth}
+        mainState={mainState}
+        />
       }
 
       {(isAuth === true && mainState === 'collections') &&

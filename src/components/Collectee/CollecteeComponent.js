@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import UpdateAddressComponent from "../Address/UpdateAddressComponent"
-import "./Main.css"
+import "./Collectee.css"
 import UseRandomString from "../../hooks/useRandomString"
 
-const MainComponent = () => {
+const CollecteeComponent = () => {
     const [error, setError] = useState('')
     const [collectionRequested, setCollectionRequested] = useState(false)
     const [addressUpdated, setAddressUpdated] = useState(false)
@@ -93,4 +93,4 @@ const TimerElement = () => {
 }
 
 
-export default MainComponent
+export default CollecteeComponent
