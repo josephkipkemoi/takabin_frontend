@@ -1,3 +1,4 @@
+import { Button } from 'react-bootstrap'
 import './Nav.css'
 
 const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
@@ -11,25 +12,25 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
 
     return (
         <div className='nav'>
-            <button name='request' onClick={handleState}>
+            <Button variant='primary'  name='request' onClick={handleState}>
                 Home
-            </button>
-            <button name='help' onClick={handleState}>
+            </Button>
+            <Button name='help' onClick={handleState}>
                 Help
-            </button>
-             <button name='collections' onClick={handleState}>
+            </Button>
+             <Button name='collections' onClick={handleState}>
                 Collections
-            </button>
-            <button name='profile' onClick={handleState}>
+            </Button>
+            <Button name='profile' onClick={handleState}>
                 Profile
-            </button>
+            </Button>
             {isAuth ?   
-            <button onClick={handleLogout}>
+            <Button onClick={handleLogout}>
                 Logout
-            </button> :
-            <button name="login" onClick={handleAuthState}>
+            </Button> :
+            <Button name="login" onClick={handleAuthState}>
               Login
-            </button>
+            </Button>
             }         
         </div>
     )

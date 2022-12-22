@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import './Address.css'
+import { Card, Modal } from 'react-bootstrap'
 
 const UpdateAddressComponent = () => {
     const [addressDetails, setAddressDetails] = useState({
@@ -34,6 +35,7 @@ const UpdateAddressComponent = () => {
     
     return (
         <div className='address-container'>
+           
             <h2>Address Information</h2>
                 <div className='address-container-input'>
                     <input 
@@ -71,6 +73,8 @@ const UpdateAddressComponent = () => {
             <button onClick={submitAddress}>Update</button>
 
         </div>
+       
+     
     )
 }
 

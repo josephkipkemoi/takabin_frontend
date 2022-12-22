@@ -2,19 +2,31 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import UpdateAddressComponent from "../Address/UpdateAddressComponent"
 import "./Main.css"
+import UseRandomString from "../../hooks/useRandomString"
 
 const MainComponent = () => {
     const [error, setError] = useState('')
     const [collectionRequested, setCollectionRequested] = useState(false)
     const [addressUpdated, setAddressUpdated] = useState(false)
     const [updateAddress, setUpdateAddress] = useState(false)
+    
+  
 
-    const handleRequest = () => {
+    const handleRequest = async () => {
+        const user_id = JSON.parse(localStorage.getItem('auth-user')).id
+        const collection_id = UseRandomString()
+
         if(addressUpdated === false) {
             setError('Update your address location for easy collection by')
             return false
         }
-        setCollectionRequested(true)
+        const res = await axios.post("http://localhost:8000/api/v1/collections", {
+            user_id,
+            collection_id
+        })
+        if(res.status === 201) {
+            setCollectionRequested(true)
+        }
     }
 
     const checkAddressStatus = async (userId) => {

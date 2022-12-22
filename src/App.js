@@ -42,7 +42,7 @@ function App() {
           </i>
         </p>
       </header>
-
+      
       {isAuth === false &&
        <AuthComponent
         authState={authState}
