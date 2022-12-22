@@ -13,6 +13,7 @@ import Collectee from './pages/Collectee/Collectee';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
+  const [userRole, setUserRole] = useState(null)
 
   const [authState, setAuthState] = useState('landing')
   const [mainState, setMainState] = useState('request')
@@ -21,9 +22,10 @@ function App() {
 
   const checkIsAuth = () => {
     const authUser = localStorage.getItem('auth-user')
-
+    const userRole = localStorage.getItem('user-role')
     if(Boolean(authUser) === true) {
       setIsAuth(true)
+      setUserRole(userRole)
     }
   }
 
@@ -50,7 +52,7 @@ function App() {
        />
       }
 
-      {isAuth === true &&
+      {(isAuth === true && userRole === 'collectee') &&
         <Collectee
         isAuth={isAuth}
         mainState={mainState}
