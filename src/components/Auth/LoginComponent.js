@@ -11,8 +11,21 @@ const LoginComponent = ({ handleAuthState }) => {
     const handleChange = (e) => setUserDetails(prev => ({...prev, [e.target.name] : e.target.value}))
 
     const handleSubmit = async () => {
-        console.log(await axios.post('http://localhost:8000/api/v1/login', userDetails))
-       
+        try {
+
+            const res = await axios.post('http://localhost:8000/api/v1/login', userDetails)
+
+            if(res.status === 200) {
+                const { user, role } = res.data
+                localStorage.setItem('auth-user', JSON.stringify(user))
+                localStorage.setItem('user-role', role)
+                window.location.reload()
+            }
+
+        } catch (error) {
+            console.error(error?.message)
+        }
+      
     }
 
     return (
