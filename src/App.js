@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+
 import AuthComponent from './components/Auth/AuthComponent';
 import CollectionComponent from './components/Collections/CollectionComponent';
 import GeolocationComponent from './components/GeoLocation/GeoLocationComponent';
+import Header from './components/Header/Header';
 import HelpComponent from './components/Help/HelpComponent';
 import NavComponent from './components/Navigation/NavComponent';
 import ProfileComponent from './components/Profile/ProfileComponent';
-
-
-import config from './config.json';
 import Collectee from './pages/Collectee/Collectee';
 import Collector from './pages/Collector/Collector';
 
@@ -38,14 +37,7 @@ function App() {
     <div>
       <GeolocationComponent/>
       <div className='container'> 
-      <header className='app-header'>
-        <h1 className='fw-bold text-white m-5'>{config.APP_NAME}</h1>
-        <p className='text-white'>
-          <i>
-            {config.APP_SLOGAN}
-          </i>
-        </p>
-      </header>
+      <Header/>
 
       {isAuth === false &&
        <AuthComponent

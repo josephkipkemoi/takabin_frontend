@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom";
 // import './Auth.css';
 import LoginComponent from "./LoginComponent";
 import SignupComponent from "./SignupComponent";
@@ -36,10 +37,20 @@ export default function AuthComponent({ authState, handleAuthState }) {
 
 const AuthButtonElements = ({ handleAuthState }) => {
     return (
-        <div className ="auth-d-flex">
+        <div className="d-flex justify-content-center mt-5">
             <div>
-                <button className="auth-btn auth-btn-light" onClick={handleAuthState} name="login">Login</button>
-                <button className="auth-btn auth-btn-light" onClick={handleAuthState} name="signup">Signup</button>
+                <Link 
+                    className="btn btn-primary rounded-0 m-1 shadow-sm" 
+                    to="/login"
+                >
+                    Login
+                </Link>
+                <Link 
+                    className="btn btn-light rounded-0 m-1 shadow-sm" 
+                    to="/register"
+                >
+                    Signup
+                </Link>
             </div>          
         </div>
     )

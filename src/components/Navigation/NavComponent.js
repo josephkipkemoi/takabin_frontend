@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import './Nav.css'
 
 const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
-    
+    const [userRole, setUserRole] = useState(null)
     const handleLogout = () => {
         localStorage.clear()
         window.location.reload()
@@ -10,20 +12,25 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
 
     const handleState = (e) => setMainState(e.target.name)
 
+    useEffect(() => {
+        const userRole = localStorage.getItem('user-role')
+        setUserRole(userRole)
+    }, [userRole])
+    
     return (
         <div className='nav d-flex justify-content-around'>
-            <Button variant='primary' name='request' onClick={handleState}>
+            <Link className='btn' to="/">
                 Home
-            </Button>
-            <Button name='help' onClick={handleState}>
+            </Link>
+            <Link className='btn' to="/help">
                 Help
-            </Button>
-             <Button name='collections'  onClick={handleState}>
+            </Link>
+             <Link className='btn' to="/collector">
                 Collections
-            </Button>
-            <Button name='profile' onClick={handleState}>
+            </Link>
+            <Link className='btn' to="/profile">
                 Profile
-            </Button>
+            </Link>
             {isAuth ?   
             <Button onClick={handleLogout}>
                 Logout
