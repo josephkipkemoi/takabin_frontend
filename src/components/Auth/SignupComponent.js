@@ -62,7 +62,7 @@ const SignupComponent = ({ handleAuthState }) => {
         setError('')
         
         try {
-            const res = await axios.post('http://localhost:8000/api/v1/register?user_role=2', userDetails)
+            const res = await axios.post('http://localhost:8000/api/v1/register?user_role=1', userDetails)
             localStorage.setItem('auth-user', JSON.stringify(res.data.user))
             localStorage.setItem('user-role', res.data.role)
             window.location.reload()

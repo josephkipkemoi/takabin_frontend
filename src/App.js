@@ -10,6 +10,7 @@ import ProfileComponent from './components/Profile/ProfileComponent';
 
 import config from './config.json';
 import Collectee from './pages/Collectee/Collectee';
+import Collector from './pages/Collector/Collector';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
@@ -36,9 +37,10 @@ function App() {
   return (
     <div>
       <GeolocationComponent/>
+      <div className='container'> 
       <header className='app-header'>
-        <h1>{config.APP_NAME}</h1>
-        <p>
+        <h1 className='fw-bold text-white m-5'>{config.APP_NAME}</h1>
+        <p className='text-white'>
           <i>
             {config.APP_SLOGAN}
           </i>
@@ -52,8 +54,17 @@ function App() {
        />
       }
 
-      {(isAuth === true && userRole === 'collectee') &&
-        <Collectee
+        {(isAuth === true && userRole === 'collectee') &&
+          <Collectee
+          isAuth={isAuth}
+          mainState={mainState}
+          />
+        }
+
+    
+
+    {(isAuth === true && userRole === 'collector') &&
+        <Collector
         isAuth={isAuth}
         mainState={mainState}
         />
@@ -70,11 +81,13 @@ function App() {
       {mainState === 'help' && <HelpComponent/>}
 
   
+      </div>
+     
       <NavComponent
         isAuth={isAuth}
         handleAuthState={handleAuthState}
         setMainState={setMainState}
-      />
+      /> 
     </div>
   );
 }

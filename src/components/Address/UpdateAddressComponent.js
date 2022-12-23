@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import './Address.css'
+// import './Address.css'
 import { Card, Modal } from 'react-bootstrap'
 
 const UpdateAddressComponent = () => {

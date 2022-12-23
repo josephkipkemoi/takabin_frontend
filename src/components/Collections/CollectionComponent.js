@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import './Collections.css';
+// import './Collections.css';
 
 const CollectionComponent = () => {
     const [collectionData, setCollectionData] = useState([])
@@ -12,22 +12,19 @@ const CollectionComponent = () => {
         } catch (error) {
             console.error(error?.message)
         }
-   
     }
 
-    const CollectionElements = (n, i) => {
-       
+    const CollectionElements = (collectionData) => {
         return (
-            <React.Fragment key={i}>
-                <div className='collection-flex'>
-                    <span>{i+1}.</span>
-                    <h3>
-                        Collection ID: {n?.collection_id}
+            <React.Fragment>
+                <div >
+                    <h3 className='text-dark'>
+                        Collection ID: {collectionData?.collectionData.collection_id}
                     </h3>
-                    <p>Estimated Collection Time :{Boolean(n?.estimate_collection_time) ? n.estimate_collection_time : 'Pending'}</p>
-                    <p>Collected: {Boolean(n?.collected)? 'Yes': 'Not Yet'}</p>
-                    <p>Collector: {Boolean(n?.collector_id) ? 'Confirmed' : 'Pending Confirmation'}</p>
-                    <p>Collected At: {Boolean(n?.collection_collected_at) ? n.collection_collected_at : 'Pending'}</p>
+                    <p className='text-dark'>Estimated Collection Time :{Boolean(collectionData?.collectionData.estimate_collection_time) ? collectionData.collectionData.estimate_collection_time : 'Pending'}</p>
+                    <p className='text-dark'>Collected: {Boolean(collectionData?.collectionData.collected) ? 'Yes': 'Not Yet'}</p>
+                    <p className='text-dark'>Collector: {Boolean(collectionData?.collectionData.collector_id) ? 'Confirmed' : 'Pending Confirmation'}</p>
+                    <p className='text-dark'>Collected At: {Boolean(collectionData?.collectionData.collection_collected_at) ? collectionData.collectionData.collection_collected_at : 'Pending'}</p>
                 </div>
               
             </React.Fragment>
@@ -40,12 +37,19 @@ const CollectionComponent = () => {
     }, [])
 
     return (
-        <div className='collection-container'>
-            <h1>Collections</h1>
-            <h4>View pending collections</h4>
-            {collectionData.length > 0 ? 
-            collectionData.map(CollectionElements) : 
-            <p>No pending collections</p>}
+        <div className='container'>
+            <div className='card'>
+                <div className='card-header'>
+                    <h1>Collections</h1>
+                </div>
+                <div className='card-body'>
+                    <h4>Pending collection</h4>
+                    {collectionData.id ? 
+                    <CollectionElements collectionData={collectionData}/> : 
+                    <p>No pending collections</p>}
+                </div>
+            </div>
+          
         </div>
     )
 }

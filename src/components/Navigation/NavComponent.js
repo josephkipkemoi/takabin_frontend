@@ -11,14 +11,14 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
     const handleState = (e) => setMainState(e.target.name)
 
     return (
-        <div className='nav'>
-            <Button variant='primary'  name='request' onClick={handleState}>
+        <div className='nav d-flex justify-content-around'>
+            <Button variant='primary' name='request' onClick={handleState}>
                 Home
             </Button>
             <Button name='help' onClick={handleState}>
                 Help
             </Button>
-             <Button name='collections' onClick={handleState}>
+             <Button name='collections'  onClick={handleState}>
                 Collections
             </Button>
             <Button name='profile' onClick={handleState}>
