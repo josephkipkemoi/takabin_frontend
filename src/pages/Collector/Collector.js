@@ -2,7 +2,6 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import Header from "../../components/Header/Header"
 import NavComponent from "../../components/Navigation/NavComponent"
-import { withProtected } from "../../hooks/routeProtection"
 
 const Collector = () => {
     const [collectionCount, setCollectionCount] = useState(0)
@@ -101,4 +100,4 @@ const AddressDetailsComponent = ({ addressDetails }) => {
     )
 }
 
-export default withProtected(Collector) 
+export default Collector

@@ -3,6 +3,7 @@ import axios from "axios"
 import UpdateAddressComponent from "../Address/UpdateAddressComponent"
 // import "./Collectee.css"
 import UseRandomString from "../../hooks/useRandomString"
+import { Spinner } from "react-bootstrap"
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -10,6 +11,7 @@ const CollecteeComponent = () => {
     const [addressUpdated, setAddressUpdated] = useState(false)
     const [updateAddress, setUpdateAddress] = useState(false)
     const [estimateCollectionTime, setEstimateCollectionTime] = useState(null)
+    const [modalShow, setModalShow] = useState(false)
 
     const fetchCollections = async (userId) => {
         try {
@@ -49,7 +51,7 @@ const CollecteeComponent = () => {
     }
 
     const handleUpdateAddress = () => {
-        setUpdateAddress(true)
+        setModalShow(true)
     }
 
     useEffect(() => {
@@ -63,13 +65,18 @@ const CollecteeComponent = () => {
             {collectionRequested && <p>Garbage queued for collection</p>}
 
             {error && 
-                <p>
+                <p className="d-flex align-items-center">
                     {error}
-                    <button className="main-btn" onClick={handleUpdateAddress}>Clicking Here</button>
+                    <button 
+                    className="btn text-light" 
+                    onClick={handleUpdateAddress}
+                    >
+                        Clicking Here
+                    </button>
                 </p>
             }
             
-            {updateAddress && <UpdateAddressComponent/>}
+            {modalShow && <UpdateAddressComponent modalShow={modalShow} setModalShow={setModalShow}/>}
 
             <div>
                 {collectionRequested ? 
@@ -77,11 +84,13 @@ const CollecteeComponent = () => {
                 estimateCollectionTime={estimateCollectionTime}
                 /> :
                 <button 
-                    className="request-btn" 
+                    className="d-flex flex-column align-items-center btn btn-warning text-white fw-bold shadow btn-lg p-5" 
                     onClick={handleRequest} 
                     disabled={collectionRequested}
                 >
-                    Request
+                    <Spinner animation="grow" size="xl">                    
+                    </Spinner>
+                   <span className="mt-5"> Click to Request</span>
                 </button>
                 }             
             </div>

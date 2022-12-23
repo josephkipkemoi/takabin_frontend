@@ -17,7 +17,7 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
         setUserRole(userRole)
     }, [userRole])
     
-    return (
+    return (    
         <div className='nav d-flex justify-content-around'>
             <Link className='btn' to="/">
                 Home
@@ -25,7 +25,7 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
             <Link className='btn' to="/help">
                 Help
             </Link>
-             <Link className='btn' to="/collector">
+             <Link className='btn' to={userRole === 'collector' ? "/collector" : '/collectee'}>
                 Collections
             </Link>
             <Link className='btn' to="/profile">

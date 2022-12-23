@@ -24,11 +24,11 @@ export const withProtected = (WrappedComponent) => {
       
       useEffect(() => {
         const user = JSON.parse(localStorage.getItem('auth-user'))
-        if(Boolean(user?.id) === false) {
-            {console.log(props)}
-             redirect('/')     
-        }
-        return undefined
+        console.log(user)
+        // if(Boolean(user?.id) === false) {
+        //      redirect('/')     
+        // }
+        // return undefined
     }, [])
 
       return <WrappedComponent {...props} />;

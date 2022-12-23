@@ -14,17 +14,19 @@ import ProfileComponent from './components/Profile/ProfileComponent';
 import HelpComponent from './components/Help/HelpComponent';
 import LoginComponent from './components/Auth/LoginComponent';
 import SignupComponent from './components/Auth/SignupComponent';
+import Collectee from './pages/Collectee/Collectee';
+import CollecteeComponent from './components/Collectee/CollecteeComponent';
 
 const ProtectedRoute = ({ children }) => {
-  const [user, setUser] = useState(null)
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('auth-user'))
-    setUser(user)
-  }, [])
- 
-  if(!user) {
-    return <Navigate to="/" replace />
-  }
+  // const [user, setUser] = useState(null)
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem('auth-user'))
+  //   setUser(user)
+  // }, [user])
+  // console.log(user)
+  // if(Boolean(user?.id) === false) {
+  //   return <Navigate to="/" replace />
+  // }
   return children
 }
 
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: '/collector',
     element: <ProtectedRoute><Collector/></ProtectedRoute>
+  },
+  {
+    path: '/collectee',
+    element: <ProtectedRoute><h1>Collectoee</h1></ProtectedRoute>
   },
   {
     path: '/profile',

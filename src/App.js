@@ -2,14 +2,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 import AuthComponent from './components/Auth/AuthComponent';
-import CollectionComponent from './components/Collections/CollectionComponent';
 import GeolocationComponent from './components/GeoLocation/GeoLocationComponent';
 import Header from './components/Header/Header';
-import HelpComponent from './components/Help/HelpComponent';
 import NavComponent from './components/Navigation/NavComponent';
-import ProfileComponent from './components/Profile/ProfileComponent';
 import Collectee from './pages/Collectee/Collectee';
-import Collector from './pages/Collector/Collector';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
@@ -52,26 +48,7 @@ function App() {
           mainState={mainState}
           />
         }
-
-    
-
-    {(isAuth === true && userRole === 'collector') &&
-        <Collector
-        isAuth={isAuth}
-        mainState={mainState}
-        />
-      }
-
-      {(isAuth === true && mainState === 'collections') &&
-        <CollectionComponent/>
-      }
-
-      {(isAuth === true && mainState === 'profile') &&
-        <ProfileComponent/>
-      }
-
-      {mainState === 'help' && <HelpComponent/>}
-
+  
   
       </div>
      
