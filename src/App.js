@@ -5,6 +5,7 @@ import AuthComponent from './components/Auth/AuthComponent';
 import GeolocationComponent from './components/GeoLocation/GeoLocationComponent';
 import Header from './components/Header/Header';
 import NavComponent from './components/Navigation/NavComponent';
+import TopNavigation from './components/TopNavigation/TopNavigation';
 import Collectee from './pages/Collectee/Collectee';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <div>
+      {isAuth && <TopNavigation/>}
       <GeolocationComponent/>
       <div className='container'> 
       <Header/>

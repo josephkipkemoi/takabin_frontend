@@ -5,6 +5,7 @@ import "./Collectee.css"
 import UseRandomString from "../../hooks/useRandomString"
 import { Modal, Spinner } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { PaymentModal } from "../Collections/CollectionComponent"
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -107,7 +108,9 @@ const CollecteeComponent = () => {
 
 const TimerElement = ({ estimateCollectionTime }) => {
     const time = new Date(estimateCollectionTime)
-    
+    const [payment, setPayment] = useState(125)
+    const [paymentModalShow, setPaymentModalShow] = useState(false)
+
     return (
             <div className="bg-primary p-1 rounded-0 shadow mt-3">
                 <div 
@@ -119,15 +122,22 @@ const TimerElement = ({ estimateCollectionTime }) => {
                             `by ${time.getDate() + '-' + time.getMonth() + '-' + time.getFullYear()}` : 
                             'soon'}
                         </p>
-                        <p className="text-center">This service will cost <b>Kes. 125/=</b></p>
+                        <p className="text-center">This service will cost <b>Kes. {payment}/=</b></p>
                     </div>                   
                     <div className="timer-cancel d-flex justify-content-center mt-3">
                         <button className="btn btn-danger rounded shadow m-1">Cancel Collection</button>
                         <Link to="/collections" className="btn btn-light rounded shadow m-1">View Status</Link>
-                        <button className="btn btn-light m-1">Make Payment</button>
+                        <button className="btn btn-success m-1" onClick={() => setPaymentModalShow(true)}>Make Payment</button>
                     </div>
                 </div>
-                             
+                {paymentModalShow &&
+                    <PaymentModal
+                        payment={payment}
+                        setPaymentModalShow={setPaymentModalShow}
+                        paymentModalShow={paymentModalShow}
+                    />
+                }
+                
             </div>      
     )
 }

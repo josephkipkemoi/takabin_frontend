@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Container } from 'react-bootstrap';
+import { Button, Card, Container, Modal } from 'react-bootstrap';
+import UseRandomString from '../../hooks/useRandomString';
 import Header from '../Header/Header';
 import NavComponent from '../Navigation/NavComponent';
 // import './Collections.css';
 
 const CollectionComponent = () => {
     const [collectionData, setCollectionData] = useState([])
+    const [paymentModalShow, setPaymentModalShow] = useState(false)
+    const [payment, setPayment] = useState(125)
 
     const fetchCollections = async (userId) => {
         try {
@@ -21,7 +24,7 @@ const CollectionComponent = () => {
         return (
             <React.Fragment>
                 <div >
-                    <div className='alert alert-danger'>
+                    <div className='alert alert-danger shadow-sm'>
                         <p className='text-center'>Make payment once collector is within your premises</p>
                     </div>
                     <h6 className='text-dark'>
@@ -30,7 +33,7 @@ const CollectionComponent = () => {
                     <div className='row'>
                         <div className='col'>
                             <p>
-                                Service Cost: Kes. 125/=
+                                Service Cost: Kes. {Number(payment).toLocaleString()}/=
                             </p>
                             <p 
                             className='text-dark'
@@ -97,14 +100,99 @@ const CollectionComponent = () => {
                             <Button variant='dark'>
                                 Cancel Collection
                             </Button>
-                            <Button>
+                            <Button onClick={() => setPaymentModalShow(true)}>
                                 Make Payment
                             </Button>
                         </Card.Footer>
                     </Card>
+                    {paymentModalShow &&
+                    <PaymentModal 
+                        serviceId={collectionData?.service_id}
+                        collectionId={collectionData?.id}
+                        payment={payment}
+                        paymentModalShow={paymentModalShow}
+                        setPaymentModalShow={setPaymentModalShow}
+                    />
+                    }
                 </Container>
             <NavComponent/>
         </>
+    )
+}
+
+export const PaymentModal = ({ paymentModalShow, payment, setPaymentModalShow, serviceId, collectionId }) => {
+    const [userDetails, setUserDetails] = useState({
+        phone_number: null,
+        amount: null,
+        collection_id: null,
+        service_id: null,
+        user_id: null,
+        payment_reference_code: null
+    })
+
+    const referenceCode = UseRandomString()
+    const {phone_number, amount, service_id, collection_id, user_id} = userDetails
+
+    const handleChange = (e) => setUserDetails(prev => ({...prev, [e.target.name]: e.target.value}))
+
+    const handleCheckout = async () => {
+        const res = await axios.
+         post(`http://localhost:8000/api/v1/users/${user_id}/collections/${collection_id}/services/${service_id}`, userDetails)
+        
+         if(res.status === 201) {
+            setPaymentModalShow(false)
+        }
+    }
+
+    useEffect(() => {
+        const user_id = JSON.parse(localStorage.getItem('auth-user')).id
+        const phone_number = JSON.parse(localStorage.getItem('auth-user')).phone_number
+        setUserDetails(prev => (
+            {
+                ...prev, 
+                user_id,
+                phone_number, 
+                amount: payment, 
+                service_id: serviceId, 
+                collection_id: collectionId,
+                payment_reference_code: referenceCode                
+            }
+        ))
+
+    }, [paymentModalShow])
+    return (
+        <Modal show={paymentModalShow}>
+            <Modal.Header className='bg-success text-white'>
+                MPESA 
+            </Modal.Header>
+            <Modal.Body>
+                <input 
+                    type="number" 
+                    name="phone_number"
+                    className='form-control p-3 mb-3' 
+                    value={phone_number} 
+                    placeholder={phone_number}
+                    onChange={handleChange}
+                />
+                <input 
+                    type="number" 
+                    name="amount"
+                    className='form-control p-3 mb-3' 
+                    value={amount}
+                    placeholder={amount}
+                    onChange={handleChange}
+                />
+                <p className='alert alert-danger'>
+                    Wait for Mpesa pop-up and enter Mpesa pin to checkout.
+                </p>
+                <button className='btn btn-danger m-1' onClick={() => setPaymentModalShow(false)}>
+                    Cancel
+                </button>
+                <button className='btn btn-primary m-1' onClick={handleCheckout}>
+                    Checkout
+                </button>
+            </Modal.Body>
+        </Modal>
     )
 }
 
