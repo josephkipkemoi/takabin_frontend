@@ -42,7 +42,7 @@ function App() {
        />
       }
 
-        {(isAuth === true && userRole === 'collectee') &&
+        {(isAuth === true && userRole === 'Collectee') &&
           <Collectee
           isAuth={isAuth}
           mainState={mainState}

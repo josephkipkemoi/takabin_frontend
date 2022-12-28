@@ -45,19 +45,28 @@ const Collector = () => {
 
         return (
             <React.Fragment key={i}>
-                <p>Contact Number: {n.phone_number}</p>
-                <button onClick={() => handleCollection(n.id)}>
-                    Book for collection
-                </button>
-                <button onClick={() => handleViewDetails(n.id)}>
-                    View Details
-                </button>
+                <div className="bg-info shadow-sm mb-3 p-3 d-flex align-items-center justify-content-between">
+                    <div>
+                        <p>Contact: {n.phone_number}</p>
+                    </div>
+                    <div>
+                        <button className="btn btn-primary rounded-0 m-1" onClick={() => handleCollection(n.id)}>
+                            Book for collection
+                        </button>
+                        <button className="btn btn-primary rounded-0 m-1" onClick={() => handleViewDetails(n.id)}>
+                            View Details
+                        </button>    
+                    </div>
+                               
+                </div>
+                <div>
+
+                </div>
                 {(Boolean(addressDetails.id) && addressDetails.user_id === n.id) &&
-                    <AddressDetailsComponent
-                    addressDetails={addressDetails}
+                        <AddressDetailsComponent
+                        addressDetails={addressDetails}
                     />
-                }
-      
+                }                  
             </React.Fragment>
         )
     }
@@ -70,16 +79,19 @@ const Collector = () => {
         <>
             <Header/>
             <div className="container">
-                <div className="card">
-                    <div className="card-header">
+                <div className="card border-0">
+                    <div className="card-header bg-primary text-white">
                         <h3>Collections</h3>
                     </div>
+                    <div className="card-body">
+                        <p>{collectionCount} collections available for pickup</p>
+                        <hr/>
+                        {Boolean(collections.users) &&
+                        collections?.users?.map(CollectionElements)
+                        }
+                    </div>
                 </div>
-                <p>{collectionCount} collections available for pickup</p>
-                <hr/>
-                {Boolean(collections.users) &&
-                collections?.users?.map(CollectionElements)
-                }
+              
             </div>
             <NavComponent/>
         </>
@@ -90,12 +102,18 @@ const Collector = () => {
 const AddressDetailsComponent = ({ addressDetails }) => {
 
     return (
-        <div>
-         <h3>Pickup Location</h3>
-         <span>County: {addressDetails.county}</span>
-         <span>Sub County/Constituency: {addressDetails.sub_county}</span>
-         <span>Estate/Apartment: {addressDetails.estate}</span>
-         <span>House Number: {addressDetails.house_number}</span>
+        <div className="p-3">
+         <h5>Pickup Location</h5>
+         <div className="d-flex justify-content-between">
+            <div>
+                <span className="d-block">County: {addressDetails.county}</span>
+                <span className="d-block">Sub County/Constituency: {addressDetails.sub_county}</span>
+            </div>
+            <div>
+                <span className="d-block">Estate/Apartment: {addressDetails.estate}</span>
+                <span className="d-block">House Number: {addressDetails.house_number}</span>
+            </div>  
+         </div>          
         </div>
     )
 }

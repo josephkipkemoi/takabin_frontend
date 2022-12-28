@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from 'axios'
 import NavComponent from "../Navigation/NavComponent"
 import Header from "../Header/Header"
-import { Link } from "react-router-dom"
+import { Link, redirect } from "react-router-dom"
 const LoginComponent = ({ handleAuthState }) => {
     const [userDetails, setUserDetails] = useState({
         phone_number: '',
@@ -22,7 +22,7 @@ const LoginComponent = ({ handleAuthState }) => {
                 const { user, role } = res.data
                 localStorage.setItem('auth-user', JSON.stringify(user))
                 localStorage.setItem('user-role', role)
-                window.location.reload()
+                window.location = '/'
             }
 
         } catch (error) {

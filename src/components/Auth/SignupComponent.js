@@ -2,15 +2,17 @@ import { useState } from "react"
 import validateNumber from "../../hooks/validateNumber";
 import axios from 'axios'
 import Header from "../Header/Header";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavComponent from "../Navigation/NavComponent";
 
 const SignupComponent = () => {
+    const [userRole, setUserRole] = useState(2)
 
     const [userDetails, setUserDetails] = useState({
         phone_number: '',
         password: '',
-        confirm_password: ''
+        confirm_password: '',
+        role_id: userRole
     })
 
     const [error, setError] = useState('')
@@ -65,12 +67,12 @@ const SignupComponent = () => {
         setError('')
         
         try {
-            const res = await axios.post('http://localhost:8000/api/v1/register?user_role=1', userDetails)
+            const res = await axios.post(`http://localhost:8000/api/v1/register`, userDetails)
 
             if(res.status === 200) {
                 localStorage.setItem('auth-user', JSON.stringify(res.data.user))
                 localStorage.setItem('user-role', res.data.role)
-                window.location = "/"
+                window.location = '/'
             }
            
            
@@ -78,6 +80,15 @@ const SignupComponent = () => {
             console.error(error)
         }
        
+    }
+
+    const handleCheckbox = (e) => {
+       if(e.target.checked === true) {
+            setUserRole(1)
+       } else {
+            setUserRole(2)
+       }
+
     }
 
     return (
@@ -89,6 +100,10 @@ const SignupComponent = () => {
                     <h2>Sign Up</h2>
                 </div>
                 <div className="card-body">
+                    <div className="d-flex align-items-center">
+                        <input id="user_role" type="checkbox" value={userRole} onChange={handleCheckbox}/>
+                        <label htmlFor="user_role">Check box if you are a collector</label>
+                    </div>
                     <div className="text-center">
                     <span>
                         Register in 2 Easy Steps

@@ -16,6 +16,7 @@ import LoginComponent from './components/Auth/LoginComponent';
 import SignupComponent from './components/Auth/SignupComponent';
 import Collectee from './pages/Collectee/Collectee';
 import CollecteeComponent from './components/Collectee/CollecteeComponent';
+import CollectionComponent from './components/Collections/CollectionComponent';
 
 const ProtectedRoute = ({ children }) => {
   // const [user, setUser] = useState(null)
@@ -52,8 +53,8 @@ const router = createBrowserRouter([
     element: <ProtectedRoute><Collector/></ProtectedRoute>
   },
   {
-    path: '/collectee',
-    element: <ProtectedRoute><h1>Collectoee</h1></ProtectedRoute>
+    path: '/collections',
+    element: <ProtectedRoute><CollectionComponent/></ProtectedRoute>
   },
   {
     path: '/profile',

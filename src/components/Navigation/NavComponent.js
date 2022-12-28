@@ -25,7 +25,7 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
             <Link className='btn' to="/help">
                 Help
             </Link>
-             <Link className='btn' to={userRole === 'collector' ? "/collector" : '/collectee'}>
+             <Link className='btn' to={userRole === 'collector' ? "/collector" : '/collections'}>
                 Collections
             </Link>
             <Link className='btn' to="/profile">
