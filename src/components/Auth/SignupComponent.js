@@ -1,18 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import validateNumber from "../../hooks/validateNumber";
 import axios from 'axios'
 import Header from "../Header/Header";
 import { Link } from "react-router-dom";
 import NavComponent from "../Navigation/NavComponent";
+import config from '../../config.json';
 
 const SignupComponent = () => {
-    const [userRole, setUserRole] = useState(2)
+    const [userRole, setUserRole] = useState(config.COLLECTEE_USER_ROLE)
+    const [services, setServices] = useState([])
 
     const [userDetails, setUserDetails] = useState({
         phone_number: '',
         password: '',
         confirm_password: '',
-        role_id: userRole
+        role_id: null
     })
 
     const [error, setError] = useState('')
@@ -45,6 +47,9 @@ const SignupComponent = () => {
     const handlePreviousStep = () => setSignupStep(prev => prev-=1)
 
     const handleSubmit = async () => {
+        const userRegistrationUrl = 'http://localhost:8000/api/v1/register'
+        const collectorRegistrationUrl = 'http://localhost:8000/api/v1/register/collector'
+
         if(Boolean(password) === false) {
             setError('Password field is required')
             return false
@@ -67,8 +72,9 @@ const SignupComponent = () => {
         setError('')
         
         try {
-            const res = await axios.post(`http://localhost:8000/api/v1/register`, userDetails)
-
+            const res = await axios
+            .post(`${userRole === config.COLLECTOR_USER_ROLE ? collectorRegistrationUrl : userRegistrationUrl}`, userDetails)
+          
             if(res.status === 200) {
                 localStorage.setItem('auth-user', JSON.stringify(res.data.user))
                 localStorage.setItem('user-role', res.data.role)
@@ -81,15 +87,44 @@ const SignupComponent = () => {
         }
        
     }
-
+    
     const handleCheckbox = (e) => {
        if(e.target.checked === true) {
-            setUserRole(1)
+            setUserRole(config.COLLECTOR_USER_ROLE)
        } else {
-            setUserRole(2)
+            setUserRole(config.COLLECTEE_USER_ROLE)
        }
 
     }
+
+    const fetchServices = async () => {
+        try {
+            const res = await axios.get("http://localhost:8000/api/v1/services");
+            setServices(res.data)
+        } catch (error) {
+            console.error(error)
+        }
+       
+    }
+
+    const fetchRoles = async () => {
+        try {
+            const res = await axios.get(`http://localhost:8000/api/v1/roles?user_role=${userRole}`);
+            setUserDetails(prev => ({...prev, role_id: res.data.id}))
+        } catch (error) {
+            console.error(error)
+        }   
+       
+    }
+
+    const handleService = (service_id) => {
+        setUserDetails(prev => ({...prev , service_id}))
+    }
+
+    useEffect(() => {
+        fetchServices()
+        fetchRoles()
+    }, [userRole])
 
     return (
         <>
@@ -100,8 +135,8 @@ const SignupComponent = () => {
                     <h2>Sign Up</h2>
                 </div>
                 <div className="card-body">
-                    <div className="d-flex align-items-center">
-                        <input id="user_role" type="checkbox" value={userRole} onChange={handleCheckbox}/>
+                    <div className="d-flex align-items-center justify-content-end mb-3">
+                        <input id="user_role" type="checkbox" className="m-1" value={userRole} onChange={handleCheckbox}/>
                         <label htmlFor="user_role">Check box if you are a collector</label>
                     </div>
                     <div className="text-center">
@@ -115,16 +150,27 @@ const SignupComponent = () => {
                     <div className="mt-1">                            
                             {error && <p><small>{error}</small></p>}
                             {signupSteps === 1 &&
-                            <input 
+                            <>
+                              <input 
                                 required
                                 name="phone_number"
                                 type="number" 
                                 placeholder="Mobile number" 
-                                className="form-control p-3" 
+                                className="form-control p-3 mb-3" 
                                 autoComplete="phone-number"                       
                                 value={phone_number}
                                 onChange={handleChange}  
-                            />
+                              />
+                              {userRole === config.COLLECTOR_USER_ROLE &&
+                                <div className="d-flex flex-column mb-3">
+                                    <label>Service Offered:</label>
+                                    <div className="d-flex">
+                                     {services.map((d,i) => <button key={i} onClick={() => handleService(d.id)} className="btn btn-outline-primary m-1">{d.service}</button>)}
+                                    </div>
+                                </div>
+                              }
+                            </>
+                          
                             }
                             {signupSteps === 2 && 
                                 <>

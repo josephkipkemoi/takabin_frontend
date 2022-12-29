@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import './Nav.css'
+import config from '../../config.json'
 
 const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
     const [userRole, setUserRole] = useState(null)
@@ -25,7 +26,7 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
             <Link className='btn' to="/help">
                 Help
             </Link>
-             <Link className='btn' to={userRole === 'collector' ? "/collector" : '/collections'}>
+             <Link className='btn' to={userRole === config.COLLECTOR_USER_ROLE ? "/collector" : '/collections'}>
                 Collections
             </Link>
             <Link className='btn' to="/profile">

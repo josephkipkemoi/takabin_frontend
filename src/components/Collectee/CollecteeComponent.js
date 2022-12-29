@@ -33,10 +33,15 @@ const CollecteeComponent = () => {
 
     
     const checkAddressStatus = async (userId) => {
-        const res = await axios.get(`http://localhost:8000/api/v1/addresses/users/${userId}`)
-        if(res?.data?.id) {
-            setAddressUpdated(true)
+        try {
+            const res = await axios.get(`http://localhost:8000/api/v1/addresses/users/${userId}`)
+            if(res?.data?.address?.id) {
+                setAddressUpdated(true)
+            }
+        } catch (error) {
+            console.error(error)
         }
+      
     }
 
     const handleRequest = () => {
