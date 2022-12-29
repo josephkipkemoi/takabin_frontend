@@ -82,24 +82,25 @@ const CollecteeComponent = () => {
             {modalShow && <UpdateAddressComponent modalShow={modalShow} setModalShow={setModalShow}/>}
 
             <div className="d-flex flex-column align-items-center">
-                {collectionRequested &&
-                <TimerElement
-                estimateCollectionTime={estimateCollectionTime}
-                /> 
-              
-                }    
-                <div className="mt-4">
+               
+                <div className="mb-2 mt-2">
                     <button 
-                        className="d-flex flex-column align-items-center rounded-circle btn btn-warning text-white fw-bold shadow btn-lg p-5" 
+                        className="d-flex flex-column align-items-center rounded-pill btn btn-warning text-white fw-bold shadow btn-lg p-5" 
                         onClick={handleRequest} 
-                        disabled={collectionRequested}
                     >
                         <Spinner variant="light" animation="grow" size="s">                    
                         </Spinner>
                     <span className="mt-5">Press to Request</span>
                     </button> 
                 </div>
-                       
+
+                {collectionRequested &&
+                <TimerElement
+                estimateCollectionTime={estimateCollectionTime}
+                /> 
+              
+                }     
+
             </div>
             
         </div>

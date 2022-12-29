@@ -22,8 +22,8 @@ const TopNavigation = () => {
     return (
         <div className='top-navigation m-1 d-flex align-items-center'>
             <div className='d-flex flex-column align-items-start text-white'>
-                <span>Balance Kes: {Number(amount).toLocaleString()}</span>
-                <span>Bonus Kes: {Number(bonus).toLocaleString()}</span>
+                <span>Balance Kes: {Number(amount).toLocaleString()}.00</span>
+                <span>Bonus Kes: {Number(bonus).toLocaleString()}.00</span>
             </div>
             <button className='btn btn-light rounded-circle shadow m-3'>N</button>
         </div>
