@@ -20,15 +20,16 @@ const CollectionComponent = () => {
         }
     }
 
-    const CollectionElements = (collectionData) => {
+    const CollectionElements = (collectionData, i) => {
+        console.log(collectionData)
         return (
-            <React.Fragment>
+            <React.Fragment key={i}>
                 <div >
                     <div className='alert alert-danger shadow-sm'>
                         <p className='text-center'>Make payment once collector is within your premises</p>
                     </div>
                     <h6 className='text-dark'>
-                        Collection ID: {collectionData?.collectionData.collection_code}
+                        Collection ID: {collectionData?.collection_code}
                     </h6>
                     <div className='row'>
                         <div className='col'>
@@ -38,8 +39,8 @@ const CollectionComponent = () => {
                             <p 
                             className='text-dark'
                             >
-                                Estimated Collection Time: {Boolean(collectionData?.collectionData.estimate_collection_time) ? 
-                                collectionData.collectionData.estimate_collection_time : 
+                                Estimated Collection Time: {Boolean(collectionData?.estimate_collection_time) ? 
+                                collectionData.estimate_collection_time : 
                                 'Pending'}
                             </p>
                             <p>
@@ -51,29 +52,34 @@ const CollectionComponent = () => {
                             <p 
                                 className='text-dark'
                             >
-                                Collector: {Boolean(collectionData?.collectionData.collector_id) ? 
+                                Collector: {Boolean(collectionData?.collector_id) ? 
                                 'Confirmed' : 
                                 'Pending Confirmation'}
                             </p>
                             <p 
                                 className='text-dark'
                             >
-                                Collected: {Boolean(collectionData?.collectionData.collected) ? 
+                                Collected: {Boolean(collectionData?.collected) ? 
                                 'Yes': 
                                 'Not Yet'}
                             </p>
                             <p 
                                 className='text-dark'
                             >
-                                Collected At: {Boolean(collectionData?.collectionData.collection_collected_at) ? 
-                                collectionData.collectionData.collection_collected_at : 
+                                Collected At: {Boolean(collectionData?.collection_collected_at) ? 
+                                collectionData.collection_collected_at : 
                                 'Pending'}
                             </p>
                         </div>
                     </div>
                 
                 </div>
-            
+                <Button variant='dark'>
+                    Cancel Collection
+                </Button>
+                <Button onClick={() => setPaymentModalShow(true)}>
+                    Make Payment
+                </Button>            
             </React.Fragment>
         )
     }
@@ -92,18 +98,12 @@ const CollectionComponent = () => {
                             Pending Collections
                         </Card.Header>
                         <Card.Body>
-                            {collectionData.id ? 
-                            <CollectionElements collectionData={collectionData}/> : 
+                            {collectionData.length > 0 ? 
+                            collectionData.map(CollectionElements)
+                             : 
                             <p>No pending collections</p>}
                         </Card.Body>
-                        <Card.Footer>
-                            <Button variant='dark'>
-                                Cancel Collection
-                            </Button>
-                            <Button onClick={() => setPaymentModalShow(true)}>
-                                Make Payment
-                            </Button>
-                        </Card.Footer>
+                      
                     </Card>
                     {paymentModalShow &&
                     <PaymentModal 

@@ -15,13 +15,16 @@ const CollecteeComponent = () => {
     const [estimateCollectionTime, setEstimateCollectionTime] = useState(null)
     const [modalShow, setModalShow] = useState(false)
     const [serviceModalShow, setServiceModalShow] = useState(false)
+    const [collections, setCollections] = useState([])
 
     const closeServiceModal = () => setServiceModalShow(false)
 
     const fetchCollections = async (userId) => {
         try {
             const res = await axios.get(`http://localhost:8000/api/v1/users/${userId}/collectee/collections/pending`)
-            if(res.data.id) {
+            setCollections(res.data)
+
+            if(res.data.length > 0) {
                 setEstimateCollectionTime(res.data.estimate_collection_time)
                 setCollectionRequested(true)
             }
@@ -62,6 +65,7 @@ const CollecteeComponent = () => {
         checkAddressStatus(userId)
         fetchCollections(userId)
     }, [addressUpdated])
+
     return (
         <div className="d-flex justify-content-center flex-column align-items-center text-white mt-3">
             
@@ -99,12 +103,15 @@ const CollecteeComponent = () => {
                     </button> 
                 </div>
 
+                <div className="timer">
                 {collectionRequested &&
-                <TimerElement
-                estimateCollectionTime={estimateCollectionTime}
-                /> 
-              
-                }     
+                    <TimerElement
+                        estimateCollectionTime={estimateCollectionTime}
+                        collections={collections}
+                    />               
+                }    
+                </div>
+               
 
             </div>
             
@@ -112,16 +119,18 @@ const CollecteeComponent = () => {
     )
 }
 
-const TimerElement = ({ estimateCollectionTime }) => {
+const TimerElement = ({ estimateCollectionTime, collections }) => {
     const time = new Date(estimateCollectionTime)
     const [payment, setPayment] = useState(125)
     const [paymentModalShow, setPaymentModalShow] = useState(false)
-
-    return (
-            <div className="bg-primary p-1 rounded-0 shadow mt-3">
-                <div 
+    console.log(collections)
+    const CollectionElements = (n, i) => {
+        return (
+            <div className="mb-3 bg-primary shadow rounded">
+            <div 
+                key={i}
                 className="d-flex flex-column align-items-center justify-content-center text-white p-3"
-                >
+            >
                     <div className="m-1"> 
                         <p>
                             Item requested for collection, you will be contacted {estimateCollectionTime ? 
@@ -135,15 +144,21 @@ const TimerElement = ({ estimateCollectionTime }) => {
                         <Link to="/collections" className="btn btn-light rounded shadow m-1">View Status</Link>
                         <button className="btn btn-success m-1" onClick={() => setPaymentModalShow(true)}>Make Payment</button>
                     </div>
-                </div>
-                {paymentModalShow &&
+                    {paymentModalShow &&
                     <PaymentModal
                         payment={payment}
                         setPaymentModalShow={setPaymentModalShow}
                         paymentModalShow={paymentModalShow}
                     />
                 }
-                
+            </div>
+            </div>
+        )
+    }
+    return (
+            <div className="p-1 rounded-0 shadow mt-3">
+                <h4>Pending Collections</h4>
+                {collections.map(CollectionElements)}          
             </div>      
     )
 }

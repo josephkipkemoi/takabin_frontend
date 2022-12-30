@@ -17,14 +17,27 @@ import SignupComponent from './components/Auth/SignupComponent';
 import Collectee from './pages/Collectee/Collectee';
 import CollecteeComponent from './components/Collectee/CollecteeComponent';
 import CollectionComponent from './components/Collections/CollectionComponent';
+import axios from 'axios';
 
 const ProtectedRoute = ({ children }) => {
-  // const [user, setUser] = useState(null)
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem('auth-user'))
-  //   setUser(user)
-  // }, [user])
-  // console.log(user)
+  const [user, setUser] = useState(null)
+
+  const fetchUser =async () => {
+    // try {
+    //   const user = await axios.get("http://localhost:8000/api/user", {
+    //     headers: {
+    //       'csrf_token': ''
+    //     }
+    //   })
+    //   console.log(user)
+    // } catch (error) {
+    //   console.error(error)
+    // }
+  }
+  useEffect(() => {
+    fetchUser()
+  }, [user])
+  
   // if(Boolean(user?.id) === false) {
   //   return <Navigate to="/" replace />
   // }

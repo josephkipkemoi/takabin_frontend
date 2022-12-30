@@ -1,3 +1,8 @@
 p {
     margin: 0;
 }
+.timer {
+    position: absolute;
+    right: 1rem;
+    top: 4rem;
+}

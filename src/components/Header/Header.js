@@ -1,4 +1,5 @@
 import config from '../../config.json'
+import './Header.css'
 
 const Header = () => {
     return (
