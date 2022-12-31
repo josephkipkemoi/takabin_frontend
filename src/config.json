@@ -1,5 +1,5 @@
 {
-    "APP_NAME": "takabin",
+    "APP_NAME": "Takabin",
     "APP_SLOGAN": "You request, We collect",
     "BACKEND_PRODUCTION_URL": "http://localhost:80000/",
     "BACKEND_DEVELOPMENT_URL": "http://localhost:8000/",
