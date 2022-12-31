@@ -4,14 +4,12 @@ import { Link } from 'react-router-dom'
 import './Nav.css'
 import config from '../../config.json'
 
-const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
+const NavComponent = ({ user }) => {
     const [userRole, setUserRole] = useState(null)
     const handleLogout = () => {
         localStorage.clear()
         window.location.reload()
     }
-
-    const handleState = (e) => setMainState(e.target.name)
 
     useEffect(() => {
         const userRole = localStorage.getItem('user-role')
@@ -32,13 +30,13 @@ const NavComponent = ({ isAuth, handleAuthState,setMainState }) => {
             <Link className='btn' to="/profile">
                 Profile
             </Link>
-            {isAuth ?   
+            {Boolean(user?.id) ?   
             <Button onClick={handleLogout}>
                 Logout
             </Button> :
-            <Button name="login" onClick={handleAuthState}>
+            <Link to="/login" className='btn'>
               Login
-            </Button>
+            </Link>
             }         
         </div>
     )

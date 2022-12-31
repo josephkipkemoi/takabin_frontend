@@ -6,7 +6,7 @@ import Header from '../Header/Header';
 import NavComponent from '../Navigation/NavComponent';
 // import './Collections.css';
 
-const CollectionComponent = () => {
+const CollectionComponent = ({ user }) => {
     const [collectionData, setCollectionData] = useState([])
     const [paymentModalShow, setPaymentModalShow] = useState(false)
     const [payment, setPayment] = useState(125)
@@ -21,7 +21,7 @@ const CollectionComponent = () => {
     }
 
     const CollectionElements = (collectionData, i) => {
-        console.log(collectionData)
+
         return (
             <React.Fragment key={i}>
                 <div >
@@ -96,13 +96,11 @@ const CollectionComponent = () => {
     }
 
     useEffect(() => {
-        const userId = JSON.parse(localStorage.getItem('auth-user')).id
-        fetchCollections(userId)
+        fetchCollections(user?.id)
     }, [])
 
     return (
         <>
-            <Header/>
                 <Container>
                     <Card className='mt-4 border-0 shadow'>
                         <Card.Header className='bg-primary text-white'>
@@ -118,7 +116,6 @@ const CollectionComponent = () => {
                     </Card>
                  
                 </Container>
-            <NavComponent/>
         </>
     )
 }

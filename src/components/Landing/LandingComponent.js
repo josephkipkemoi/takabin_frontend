@@ -2,12 +2,12 @@ import Collectee from "../../pages/Collectee/Collectee";
 import AuthComponent from "../Auth/AuthComponent";
 import ServiceComponent from "../ServicesOffered/ServiceComponent";
 
-const LandingComponent = () => {
+const LandingComponent = ({ user }) => {
     return (
         <>
-            <AuthComponent/>
+            {Boolean(user?.id) === false && <AuthComponent/>}
 
-            <Collectee/>
+            {Boolean(user?.id) && <Collectee/>}
             
             <ServiceComponent/> 
         </>
