@@ -1,4 +1,4 @@
-import { withProtected } from "../../hooks/routeProtection"
+
 
 const ProfileComponent = () => {
     return (
@@ -10,4 +10,4 @@ const ProfileComponent = () => {
     )
 }
 
-export default withProtected(ProfileComponent) 
+export default ProfileComponent

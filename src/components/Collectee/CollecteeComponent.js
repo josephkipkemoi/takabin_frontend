@@ -6,7 +6,6 @@ import UseRandomString from "../../hooks/useRandomString"
 import { Modal, Spinner } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { PaymentModal } from "../Collections/CollectionComponent"
-import { withProtected } from "../../hooks/routeProtection"
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -230,4 +229,4 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
 }
 
 
-export default withProtected(CollecteeComponent);
+export default CollecteeComponent;

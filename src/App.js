@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import LoginComponent from './components/Auth/LoginComponent';
@@ -12,18 +12,21 @@ import axios from './lib/Axios';
 import ProfileComponent from './components/Profile/ProfileComponent';
 import SignupComponent from './components/Auth/SignupComponent';
 import HelpComponent from './components/Help/HelpComponent'
+import { WithProtected, WithPublic } from './hooks/routeProtection';
 
 function App() {
 
   const [user, setUser] = useState(null)
 
   const checkIsAuth = async (token) => {
+
     try {
       const res = await axios.get('api/user', {
         headers: {
                   'Authorization': token?.type + " " + token?.token
           }
       })
+
       setUser(res.data)
     } catch (error) {
       if(error.response.status === 401) {
@@ -34,10 +37,10 @@ function App() {
   }
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem('auth'))?.authorization
+    const token = JSON.parse(localStorage.getItem('user'))?.authorization
 
     checkIsAuth(token)
-  }, [user])
+  }, [])
  
   return (
     <>
@@ -49,10 +52,10 @@ function App() {
      
         <Routes>
             <Route path='/' element={<LandingComponent user={user}/>}/>
-            <Route path='/login' element={<LoginComponent/>}/>
-            <Route path='/register' element={<SignupComponent/>}/>
-            <Route path='/collections' element={<CollecteeComponent/>}/>
-            <Route path='/profile' element={<ProfileComponent/>}/>
+            <Route path='/login' element={<WithPublic user={user}><LoginComponent /></WithPublic>}/>
+            <Route path='/register' element={<WithPublic user={user}><SignupComponent/></WithPublic>}/>
+            <Route path='/collections' element={<WithProtected user={user}><CollecteeComponent/></WithProtected>}/>
+            <Route path='/profile' element={<WithProtected user={user}><ProfileComponent/></WithProtected>}/>
             <Route path='/help' element={<HelpComponent/>} />
         </Routes>
 

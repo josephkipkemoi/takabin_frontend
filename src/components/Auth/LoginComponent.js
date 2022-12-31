@@ -1,7 +1,8 @@
 import { useState } from "react"
 import axios from 'axios'
 import { Link } from "react-router-dom"
-const LoginComponent = ({ handleAuthState }) => {
+
+const LoginComponent = () => {
     const [userDetails, setUserDetails] = useState({
         phone_number: '',
         password: ''
@@ -17,12 +18,7 @@ const LoginComponent = ({ handleAuthState }) => {
             const res = await axios.post('http://localhost:8000/api/v1/login', userDetails)
 
             if(res.status === 200) {
-                console.log(res.data)
-                const { user, role } = res.data
-                localStorage.setItem('auth', JSON.stringify(res.data))
-                localStorage.setItem('auth-user', JSON.stringify(user))
-                localStorage.setItem('user-role', role)
-                // window.location = '/'
+               localStorage.setItem('user', JSON.stringify(res.data))
             }
 
         } catch (error) {
@@ -30,6 +26,7 @@ const LoginComponent = ({ handleAuthState }) => {
         }
       
     }
+ 
 
     return (
         <>
@@ -61,7 +58,7 @@ const LoginComponent = ({ handleAuthState }) => {
                             onChange={handleChange}
                         />
                     </div>
-                    <Link className="float-end nav-link" to="/password-recover" name="passwordRecovery" onClick={handleAuthState}>
+                    <Link className="float-end nav-link" to="/password-recover" name="passwordRecovery">
                         Forgot Password?
                     </Link>
 
