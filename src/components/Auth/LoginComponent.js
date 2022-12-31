@@ -19,6 +19,7 @@ const LoginComponent = () => {
 
             if(res.status === 200) {
                localStorage.setItem('user', JSON.stringify(res.data))
+               window.location.href = '/'
             }
 
         } catch (error) {

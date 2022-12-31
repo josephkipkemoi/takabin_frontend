@@ -6,15 +6,16 @@ import config from '../../config.json'
 
 const NavComponent = ({ user }) => {
     const [userRole, setUserRole] = useState(null)
+
     const handleLogout = () => {
         localStorage.clear()
-        window.location.reload()
+        window.location.href = '/'
     }
 
     useEffect(() => {
-        const userRole = localStorage.getItem('user-role')
-        setUserRole(userRole)
-    }, [userRole])
+        const role = JSON.parse(localStorage.getItem('user'))?.role
+        setUserRole(role)
+    }, [user?.id])
     
     return (    
         <div className='nav d-flex justify-content-around'>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import validateNumber from "../../hooks/validateNumber";
 import axios from 'axios'
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import config from '../../config.json';
 
 const SignupComponent = () => {
@@ -74,10 +74,8 @@ const SignupComponent = () => {
             .post(`${userRole === config.COLLECTOR_USER_ROLE ? collectorRegistrationUrl : userRegistrationUrl}`, userDetails)
           
             if(res.status === 200) {
-                localStorage.setItem('auth', JSON.stringify(res.data))
-                localStorage.setItem('auth-user', JSON.stringify(res.data.user))
-                localStorage.setItem('user-role', res.data.role)
-                window.location = '/'
+                localStorage.setItem('user', JSON.stringify(res.data))
+                window.location.href = '/'
             }
            
            

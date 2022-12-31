@@ -53,6 +53,7 @@ function App() {
             <Route path='/login' element={<WithPublic user={user}><LoginComponent /></WithPublic>}/>
             <Route path='/register' element={<WithPublic user={user}><SignupComponent/></WithPublic>}/>
             <Route path='/collections' element={<WithProtected user={user}><CollectionComponent user={user}/></WithProtected>}/>
+            <Route path='collector' element={<WithProtected user={user}></WithProtected>}/>
             <Route path='/profile' element={<WithProtected user={user}><ProfileComponent/></WithProtected>}/>
             <Route path='/help' element={<HelpComponent/>} />
         </Routes>
