@@ -1,65 +1,65 @@
 import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import AuthComponent from './components/Auth/AuthComponent';
-import GeolocationComponent from './components/GeoLocation/GeoLocationComponent';
+import LoginComponent from './components/Auth/LoginComponent';
+import CollecteeComponent from './components/Collectee/CollecteeComponent';
 import Header from './components/Header/Header';
 import NavComponent from './components/Navigation/NavComponent';
+import ServiceComponent from './components/ServicesOffered/ServiceComponent';
 import TopNavigation from './components/TopNavigation/TopNavigation';
+import axios from './lib/Axios';
 import Collectee from './pages/Collectee/Collectee';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false)
-  const [userRole, setUserRole] = useState(null)
 
-  const [authState, setAuthState] = useState('landing')
-  const [mainState, setMainState] = useState('request')
+  const [user, setUser] = useState(null)
 
-  const handleAuthState = (e) => setAuthState(e.target.name)
-
-  const checkIsAuth = () => {
-    const authUser = localStorage.getItem('auth-user')
-    const userRole = localStorage.getItem('user-role')
-    if(Boolean(authUser) === true) {
-      setIsAuth(true)
-      setUserRole(userRole)
+  const checkIsAuth = async (token) => {
+    try {
+      const res = await axios.get('api/user', {
+        headers: {
+                  'Authorization': token?.type + " " + token?.token
+          }
+      })
+      setUser(res.data)
+    } catch (error) {
+      if(error.response.status === 401) {
+        setUser(null)
+      }
     }
+    
   }
 
   useEffect(() => {
-    checkIsAuth()
-  }, [isAuth])
+    const token = JSON.parse(localStorage.getItem('auth'))?.authorization
 
+    checkIsAuth(token)
+  }, [user])
+ 
   return (
-    <div>
-      {isAuth && <TopNavigation/>}
-      <GeolocationComponent/>
-      <div className='container'> 
-      <Header/>
+    <>
+        {Boolean(user?.id) === true && <TopNavigation/>}
 
-      {isAuth === false &&
-       <AuthComponent
-        authState={authState}
-        handleAuthState={handleAuthState}
-       />
-      }
+        <div className='container'> 
+            <Header/>
 
-        {(isAuth === true && userRole === 'Collectee') &&
-          <Collectee
-          isAuth={isAuth}
-          mainState={mainState}
-          />
-        }
-  
-  
-      </div>
+            {Boolean(user?.id) === false && <AuthComponent/>}
+
+            {Boolean(user?.id) === true && <Collectee/>}
+            
+            <ServiceComponent/> 
+    
+        </div>
      
-      <NavComponent
-        isAuth={isAuth}
-        handleAuthState={handleAuthState}
-        setMainState={setMainState}
-      /> 
-    </div>
+        <NavComponent user={user} /> 
+
+        <Routes>
+            <Route path='/login' element={<LoginComponent/>}/>
+            <Route path='/collections' element={<CollecteeComponent/>}/>
+        </Routes>
+    </>
   );
 }
 

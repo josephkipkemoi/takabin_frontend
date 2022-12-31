@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createRoot } from 'react-dom/client';
 import { 
+  BrowserRouter,
   createBrowserRouter,
   Navigate,
   RouterProvider,
@@ -17,74 +18,77 @@ import SignupComponent from './components/Auth/SignupComponent';
 import Collectee from './pages/Collectee/Collectee';
 import CollecteeComponent from './components/Collectee/CollecteeComponent';
 import CollectionComponent from './components/Collections/CollectionComponent';
-import axios from 'axios';
+import axios from './lib/Axios';
 
 const ProtectedRoute = ({ children }) => {
-  const [user, setUser] = useState(null)
+    // const [isAuth, setIsAuth] = useState(false)
 
-  const fetchUser = async () => {
-    const token = JSON.parse(localStorage.getItem('auth')).authorization
-   
+    // const token = JSON.parse(localStorage.getItem('auth'))?.authorization
 
-    try {
-      const user = await axios.get("http://localhost:8000/api/user", {
-        headers: {
-          token: token.type + " " + token.token
-        }
-      })
-    } catch (error) {
-      console.error(error)
-    }
+    // axios.get("http://localhost:8000/api/user", {
+    //       headers: {
+    //         'Authorization': token?.type + " " + token?.token
+    //       }
+    // }).then(res => {
+    //        if(Boolean(res.id) === true) {
+    //          setIsAuth(true)
+    //        }
+    // }).catch(e => {
+    //   if(e.response.status === 401) {
+    //     setIsAuth(false)
+    //   }
+    // })     
+
+    // if(isAuth === false) {
+    //   return <Navigate to="/login"/>
+    // }
+
+    return children
 
   }
-  useEffect(() => {
-    fetchUser()
-  }, [user])
-  
-  // if(Boolean(user?.id) === false) {
-  //   return <Navigate to="/" replace />
-  // }
-  return children
-}
 
+ 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App/>
-  },
-  {
-    path: '/login',
-    element: <LoginComponent/>
-  },
-  {
-    path: '/register', 
-    element: <SignupComponent/>
-  },
-  {
-    path: '/password-recover',
-    element: <h1>Recover Password</h1>
-  },
-  {
-    path: '/collector',
-    element: <ProtectedRoute><Collector/></ProtectedRoute>
-  },
-  {
-    path: '/collections',
-    element: <ProtectedRoute><CollectionComponent/></ProtectedRoute>
-  },
-  {
-    path: '/profile',
-    element: <ProtectedRoute><ProfileComponent/></ProtectedRoute>
-  }, 
-  {
-    path: '/help',
-    element: <HelpComponent/>
-  }
-])
+    {
+      path: '/',
+      element: <App/>
+    },
+    {
+      path: '/login',
+      element: <LoginComponent/>
+    },
+    {
+      path: '/register', 
+      element: <SignupComponent/>
+    },
+    {
+      path: '/password-recover',
+      element: <h1>Recover Password</h1>
+    },
+    {
+      path: '/collector',
+      element: <ProtectedRoute><Collector/></ProtectedRoute>
+    },
+    {
+      path: '/collections',
+      element: <ProtectedRoute><CollectionComponent/></ProtectedRoute>
+    },
+    {
+      path: '/profile',
+      element: <ProtectedRoute><ProfileComponent/></ProtectedRoute>
+    }, 
+    {
+      path: '/help',
+      element: <HelpComponent/>
+    }
+  ])
+
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

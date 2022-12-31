@@ -1,0 +1,10 @@
+.service-card {
+    min-width: 120px;
+}
+ 
+h6 {
+    margin: 0;
+    line-height: 24px;
+    cursor: pointer;
+   
+}

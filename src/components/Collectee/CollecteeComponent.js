@@ -6,6 +6,7 @@ import UseRandomString from "../../hooks/useRandomString"
 import { Modal, Spinner } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { PaymentModal } from "../Collections/CollectionComponent"
+import { withProtected } from "../../hooks/routeProtection"
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -61,7 +62,7 @@ const CollecteeComponent = () => {
     }
 
     useEffect(() => {
-        const userId = JSON.parse(localStorage.getItem('auth-user')).id
+        const userId = JSON.parse(localStorage.getItem('auth-user'))?.id
         checkAddressStatus(userId)
         fetchCollections(userId)
     }, [addressUpdated])
@@ -229,4 +230,4 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
 }
 
 
-export default CollecteeComponent
+export default withProtected(CollecteeComponent);

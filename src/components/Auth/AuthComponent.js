@@ -6,34 +6,27 @@ import SignupComponent from "./SignupComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
-export default function AuthComponent({ authState, handleAuthState }) {
+export default function AuthComponent() {
   
     return (
-        <div>            
-            {authState === 'landing' && 
-                <AuthButtonElements 
-                    handleAuthState={handleAuthState}
-                /> 
-            }
-
-            {authState === 'signup' && 
-                <SignupComponent
-                    handleAuthState={handleAuthState}
-                /> 
-            }
-
-            {authState === 'login' && 
-                <LoginComponent 
-                    handleAuthState={handleAuthState}
-                />       
-            }
-
-            {authState === 'passwordRecovery' &&
-                <PasswordRecoveryComponent
-                    handleAuthState={handleAuthState}
-                />
-            }
-        </div>
+        <div className="d-flex justify-content-center mt-4">
+        <div className="d-flex">
+            <Link 
+                className="btn btn-primary rounded-0 m-1 shadow-sm auth-link d-flex align-items-center justify-content-center" 
+                to="/login"
+            >
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                <span className="auth-link-name">Login</span>                    
+            </Link>
+            <Link 
+                className="btn btn-light rounded-0 m-1 shadow-sm auth-link d-flex align-items-center justify-content-center" 
+                to="/register"
+            >
+                <FontAwesomeIcon icon={faUserPlus} />
+               <span className="auth-link-name">Signup</span> 
+            </Link>
+        </div>          
+    </div>
     )
 }
 

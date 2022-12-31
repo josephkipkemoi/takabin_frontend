@@ -1,10 +1,8 @@
 import CollecteeComponent from "../../components/Collectee/CollecteeComponent"
-const Collectee = ({ isAuth, mainState }) => {
+const Collectee = () => {
     return (
         <div className="d-flex justify-content-center">
-          {(isAuth === true && mainState === 'request') &&
-            <CollecteeComponent/>
-          }
+            <CollecteeComponent/>          
         </div>
     )
 }
