@@ -1,8 +1,6 @@
 import { useState } from "react"
 import axios from 'axios'
-import NavComponent from "../Navigation/NavComponent"
-import Header from "../Header/Header"
-import { Link, redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 const LoginComponent = ({ handleAuthState }) => {
     const [userDetails, setUserDetails] = useState({
         phone_number: '',
@@ -35,7 +33,6 @@ const LoginComponent = ({ handleAuthState }) => {
 
     return (
         <>
-        <Header/>
             <div className="container mt-5">
                 <div className="card border-0 shadow">
                     <div className="card-header bg-warning text-white">
@@ -89,7 +86,7 @@ const LoginComponent = ({ handleAuthState }) => {
           
            
             </div>
-            <NavComponent/>
+
         </>
     )
 }

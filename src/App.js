@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 
-import AuthComponent from './components/Auth/AuthComponent';
 import LoginComponent from './components/Auth/LoginComponent';
 import CollecteeComponent from './components/Collectee/CollecteeComponent';
 import Header from './components/Header/Header';
+import LandingComponent from './components/Landing/LandingComponent';
 import NavComponent from './components/Navigation/NavComponent';
-import ServiceComponent from './components/ServicesOffered/ServiceComponent';
 import TopNavigation from './components/TopNavigation/TopNavigation';
 import axios from './lib/Axios';
-import Collectee from './pages/Collectee/Collectee';
+import ProfileComponent from './components/Profile/ProfileComponent';
+import SignupComponent from './components/Auth/SignupComponent';
+import HelpComponent from './components/Help/HelpComponent'
 
 function App() {
 
@@ -43,22 +44,20 @@ function App() {
         {Boolean(user?.id) === true && <TopNavigation/>}
 
         <div className='container'> 
-            <Header/>
-
-            {Boolean(user?.id) === false && <AuthComponent/>}
-
-            {Boolean(user?.id) === true && <Collectee/>}
-            
-            <ServiceComponent/> 
-    
+            <Header/>  
         </div>
      
+        <Routes>
+            <Route path='/' element={<LandingComponent user={user}/>}/>
+            <Route path='/login' element={<LoginComponent/>}/>
+            <Route path='/register' element={<SignupComponent/>}/>
+            <Route path='/collections' element={<CollecteeComponent/>}/>
+            <Route path='/profile' element={<ProfileComponent/>}/>
+            <Route path='/help' element={<HelpComponent/>} />
+        </Routes>
+
         <NavComponent user={user} /> 
 
-        <Routes>
-            <Route path='/login' element={<LoginComponent/>}/>
-            <Route path='/collections' element={<CollecteeComponent/>}/>
-        </Routes>
     </>
   );
 }

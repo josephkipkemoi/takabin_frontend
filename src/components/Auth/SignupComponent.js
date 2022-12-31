@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react"
 import validateNumber from "../../hooks/validateNumber";
 import axios from 'axios'
-import Header from "../Header/Header";
 import { Link } from "react-router-dom";
-import NavComponent from "../Navigation/NavComponent";
 import config from '../../config.json';
 
 const SignupComponent = () => {
@@ -129,7 +127,6 @@ const SignupComponent = () => {
 
     return (
         <>
-        <Header/>
         <div className="container mt-5">
             <div className="card border-0">
                 <div className="card-header bg-warning text-white">
@@ -222,7 +219,6 @@ const SignupComponent = () => {
                 </div>
             </div>
         </div>
-           <NavComponent/>
         </>
     )
 }
