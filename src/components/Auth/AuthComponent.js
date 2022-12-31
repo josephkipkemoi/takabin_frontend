@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { Link } from "react-router-dom";
-// import './Auth.css';
+import './Auth.css';
 import LoginComponent from "./LoginComponent";
 import SignupComponent from "./SignupComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function AuthComponent({ authState, handleAuthState }) {
   
@@ -35,21 +37,23 @@ export default function AuthComponent({ authState, handleAuthState }) {
     )
 }
 
-const AuthButtonElements = ({ handleAuthState }) => {
+const AuthButtonElements = () => {
     return (
-        <div className="d-flex justify-content-center mt-5">
-            <div>
+        <div className="d-flex justify-content-center mt-4">
+            <div className="d-flex">
                 <Link 
-                    className="btn btn-primary rounded-0 m-1 shadow-sm" 
+                    className="btn btn-primary rounded-0 m-1 shadow-sm auth-link d-flex align-items-center justify-content-center" 
                     to="/login"
                 >
-                    Login
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                    <span className="auth-link-name">Login</span>                    
                 </Link>
                 <Link 
-                    className="btn btn-light rounded-0 m-1 shadow-sm" 
+                    className="btn btn-light rounded-0 m-1 shadow-sm auth-link d-flex align-items-center justify-content-center" 
                     to="/register"
                 >
-                    Signup
+                    <FontAwesomeIcon icon={faUserPlus} />
+                   <span className="auth-link-name">Signup</span> 
                 </Link>
             </div>          
         </div>

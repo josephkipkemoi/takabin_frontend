@@ -1,37 +1,9 @@
-.auth-d-flex {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.auth-link {
+    min-width: 120px;
 }
-p, span {
-    color: #fff;
-    letter-spacing: 1px;
-}
-h2 {
-    color: #fff;
-    letter-spacing: 2px;
-    line-height: 32px;
-}
-.auth-btn {
-    padding: .5rem;
+.auth-link {
     line-height: 24px;
-    border: none;
-    margin: 4px;
-    border-radius: 4px;
-    transition: .3s ease-in;
-    letter-spacing: 1px;
-    max-width: 120px;
 }
-.auth-btn:hover {
-    cursor: pointer;
-    background-color: #ebededa9;
-}
-.auth-btn-light {
-    background-color: #ebeded;
-}
-.auth-form-control {
-    padding: .75rem;
-    border: none;
-    margin: .3rem;
+.auth-link-name {
+    margin-left: 6px;
 }

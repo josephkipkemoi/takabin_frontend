@@ -1,3 +1,6 @@
 header {
     margin-top: 6rem;
 }
+.app-header h1 {
+    letter-spacing: 4px;
+}
