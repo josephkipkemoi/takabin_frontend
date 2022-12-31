@@ -76,6 +76,7 @@ const SignupComponent = () => {
             .post(`${userRole === config.COLLECTOR_USER_ROLE ? collectorRegistrationUrl : userRegistrationUrl}`, userDetails)
           
             if(res.status === 200) {
+                localStorage.setItem('auth', JSON.stringify(res.data))
                 localStorage.setItem('auth-user', JSON.stringify(res.data.user))
                 localStorage.setItem('user-role', res.data.role)
                 window.location = '/'

@@ -22,17 +22,20 @@ import axios from 'axios';
 const ProtectedRoute = ({ children }) => {
   const [user, setUser] = useState(null)
 
-  const fetchUser =async () => {
-    // try {
-    //   const user = await axios.get("http://localhost:8000/api/user", {
-    //     headers: {
-    //       'csrf_token': ''
-    //     }
-    //   })
-    //   console.log(user)
-    // } catch (error) {
-    //   console.error(error)
-    // }
+  const fetchUser = async () => {
+    const token = JSON.parse(localStorage.getItem('auth')).authorization
+   
+
+    try {
+      const user = await axios.get("http://localhost:8000/api/user", {
+        headers: {
+          token: token.type + " " + token.token
+        }
+      })
+    } catch (error) {
+      console.error(error)
+    }
+
   }
   useEffect(() => {
     fetchUser()

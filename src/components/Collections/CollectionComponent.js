@@ -79,7 +79,18 @@ const CollectionComponent = () => {
                 </Button>
                 <Button onClick={() => setPaymentModalShow(true)}>
                     Make Payment
-                </Button>            
+                </Button>   
+
+                   {paymentModalShow &&
+                    <PaymentModal 
+                        serviceId={collectionData?.service_id}
+                        collectionId={collectionData?.id}
+                        payment={payment}
+                        paymentModalShow={paymentModalShow}
+                        setPaymentModalShow={setPaymentModalShow}
+                    />
+                    }
+                             
             </React.Fragment>
         )
     }
@@ -105,15 +116,7 @@ const CollectionComponent = () => {
                         </Card.Body>
                       
                     </Card>
-                    {paymentModalShow &&
-                    <PaymentModal 
-                        serviceId={collectionData?.service_id}
-                        collectionId={collectionData?.id}
-                        payment={payment}
-                        paymentModalShow={paymentModalShow}
-                        setPaymentModalShow={setPaymentModalShow}
-                    />
-                    }
+                 
                 </Container>
             <NavComponent/>
         </>

@@ -19,10 +19,12 @@ const LoginComponent = ({ handleAuthState }) => {
             const res = await axios.post('http://localhost:8000/api/v1/login', userDetails)
 
             if(res.status === 200) {
+                console.log(res.data)
                 const { user, role } = res.data
+                localStorage.setItem('auth', JSON.stringify(res.data))
                 localStorage.setItem('auth-user', JSON.stringify(user))
                 localStorage.setItem('user-role', role)
-                window.location = '/'
+                // window.location = '/'
             }
 
         } catch (error) {
