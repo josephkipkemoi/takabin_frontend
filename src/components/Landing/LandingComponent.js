@@ -15,7 +15,7 @@ const LandingComponent = ({ user }) => {
         <>
             {Boolean(user?.id) === false && <AuthComponent/>}
 
-            {(Boolean(user?.id) && role === config.COLLECTEE_USER_ROLE) && <Collectee/>}
+            {/* {(Boolean(user?.id) && role === config.COLLECTEE_USER_ROLE) && <Collectee/>} */}
             
             <ServiceComponent/> 
         </>

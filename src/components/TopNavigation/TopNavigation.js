@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import NotificationComponent from './NotificationComponent';
 import './TopNavigation.css';
 
 const TopNavigation = () => {
+    const [userId, setUserId] = useState(null)
+
     const [balance, setBalance] = useState({
         amount: null,
         bonus: null
@@ -16,8 +19,9 @@ const TopNavigation = () => {
         setBalance(prev => ({...prev , amount, bonus}))
     }
     useEffect(() => {
-        const user_id = JSON.parse(localStorage.getItem('auth-user'))?.id
+        const user_id = JSON.parse(localStorage.getItem('user'))?.user.id
         Boolean(user_id) && fetchBalance(user_id)
+        setUserId(user_id)
     }, [])
     return (
         <div className='top-navigation m-1 d-flex align-items-center'>
@@ -25,7 +29,7 @@ const TopNavigation = () => {
                 <span>Balance Kes: {Number(amount).toLocaleString()}.00</span>
                 <span>Bonus Kes: {Number(bonus).toLocaleString()}.00</span>
             </div>
-            <button className='btn btn-light rounded-circle shadow m-3'>N</button>
+            <NotificationComponent userId={userId}/>
         </div>
     )
 }
