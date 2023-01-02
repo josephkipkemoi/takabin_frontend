@@ -6,6 +6,14 @@ import UseRandomString from "../../hooks/useRandomString"
 import { Modal, Spinner } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { PaymentModal } from "../Collections/CollectionComponent"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { 
+    faInfoCircle, 
+    faDotCircle, 
+    faEyeLowVision, 
+    faLocation, 
+    faMousePointer 
+} from "@fortawesome/free-solid-svg-icons"
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -70,13 +78,15 @@ const CollecteeComponent = () => {
         <div className="d-flex justify-content-center flex-column align-items-center text-white mt-3">
             
             {error && 
-                <p className="d-flex align-items-center">
+                <p className="d-flex align-items-center alert alert-danger shadow rounded-0">
+                    <FontAwesomeIcon icon={faLocation} className="m-1"/>
                     {error}
                     <button 
-                    className="btn text-light" 
+                    className="btn btn-danger m-1" 
                     onClick={(handleUpdateAddress)}
                     >
                         Clicking Here
+                        <FontAwesomeIcon icon={faMousePointer} style={{ marginLeft: 4 }}/>
                     </button>
                 </p>
             }
@@ -103,7 +113,7 @@ const CollecteeComponent = () => {
                     </button> 
                 </div>
 
-                <div className="timer">
+                <div className="">
                 {collectionRequested &&
                     <TimerElement
                         estimateCollectionTime={estimateCollectionTime}
@@ -126,12 +136,30 @@ const TimerElement = ({ estimateCollectionTime, collections }) => {
 
     const CollectionElements = (n, i) => {
         return (
-            <div className="mb-3 bg-primary shadow rounded">
+            <div>
             <div 
                 key={i}
-                className="d-flex flex-column align-items-center justify-content-center text-white p-3"
+                className="d-flex flex-row align-items-center justify-content-center text-white p-1"
             >
-                    <div className="m-1"> 
+                <div>
+                    <FontAwesomeIcon icon={faInfoCircle} className="btn btn-lg text-light shadow-sm rounded-pill"/>
+                </div>
+                <div className="p-1 shadow bg-light collection-block d-flex align-items-center justify-content-between rounded-pill">
+                    <div className="coll-child-left">
+                        <small className="text-dark fw-bold d-flex align-items-center">
+                            <FontAwesomeIcon icon={faDotCircle} size="sm" className="text-warning" style={{ marginRight: 4 }}/>
+                            Active   
+                        </small>
+                    </div>                  
+                    <div className="coll-child-right d-flex align-items-center">
+                       <button className="btn btn-sm m-1 rounded-pill shadow-sm text-secondary">Cancel</button>
+                        <button className="btn btn-primary btn-sm m-1 rounded-pill shadow">
+                            <FontAwesomeIcon icon={faEyeLowVision} />
+                            View
+                        </button>
+                    </div>                   
+                </div>
+                    {/* <div className="m-1"> 
                         <p>
                             Item requested for collection, you will be contacted {estimateCollectionTime ? 
                             `by ${time.getDate() + '-' + time.getMonth() + '-' + time.getFullYear()}` : 
@@ -143,7 +171,7 @@ const TimerElement = ({ estimateCollectionTime, collections }) => {
                         <button className="btn btn-danger rounded shadow m-1">Cancel Collection</button>
                         <Link to="/collections" className="btn btn-light rounded shadow m-1">View Status</Link>
                         <button className="btn btn-success m-1" onClick={() => setPaymentModalShow(true)}>Make Payment</button>
-                    </div>
+                    </div> */}
                     {paymentModalShow &&
                     <PaymentModal
                         payment={payment}
@@ -156,8 +184,8 @@ const TimerElement = ({ estimateCollectionTime, collections }) => {
         )
     }
     return (
-            <div className="p-1 rounded-0 shadow mt-3">
-                <h4>Pending Collections</h4>
+            <div className="p-1 rounded-0 mt-3 mb-5">
+                <h6 className="btn text-light">View pending collections</h6>
                 {collections.map(CollectionElements)}          
             </div>      
     )

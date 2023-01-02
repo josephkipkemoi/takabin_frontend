@@ -1,8 +1,12 @@
 p {
     margin: 0;
 }
-.timer {
-    position: absolute;
-    right: 1rem;
-    top: 4rem;
+.collection-block {
+min-width: 260px;
+}
+.coll-child-left {
+    margin-left: 1rem;
+}
+.coll-child-right {
+    margin-right: .4rem;
 }

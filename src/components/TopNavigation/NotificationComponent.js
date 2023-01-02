@@ -18,8 +18,23 @@ export default function NotificationComponent({ userId }) {
         setNotificationOpen(prev => !prev)
     }
 
+    const handleWebsockets = (Pusher, userId) => {
+        Pusher.logToConsole = true;
+
+        let pusher = new Pusher('f75bf649a1a7e42f19d9', {
+        cluster: 'ap2'
+        });
+
+        let channel = pusher.subscribe('notifications-channel');
+        channel.bind(`notifications-channel`, function(data) {
+            fetchNotifications(userId   )
+        alert(JSON.stringify(data));
+        });
+    }
+
     useEffect(() => {
-        fetchNotifications(userId)
+        handleWebsockets(window.Pusher, userId)
+       
     }, [userId])
     return (
         <>
@@ -30,35 +45,37 @@ export default function NotificationComponent({ userId }) {
                 <FontAwesomeIcon icon={faBell}/>
                 <small className='notification-count fw-bold'>{notifications.length}</small>
             </button>
-            {notificationOpen && <NotificationElement notifications={notifications}/>}
+            {notificationOpen && <NotificationElement notifications={notifications} openNotification={openNotification}/>}
         </>
        
     )
 }
 
-const NotificationElement = ({ notifications }) => {
+const NotificationElement = ({ notifications, openNotification }) => {
     
     const NotificationEl = (n, i) => {
-        console.log(n)
         return (
             <React.Fragment key={i}>
-                <Link to="/notifications" className='nav-link p-2 text-primary'>
+                <Link to="/notifications" className='nav-link p-2 alert alert-secondary rounded-0' onClick={openNotification}>
                     {n?.data?.message}
                 </Link>
-                <hr className='text-secondary'/>
             </React.Fragment>
         )
     }
     return (
         <div className='notification-element bg-white p-1'>
-            <button className='alert alert-danger btn btn-sm p-2 w-100'>
+            <button className='alert alert-light btn btn-sm p-2 w-100'>
                 Mark all as read
             </button>
-            <hr className='text-secondary'/>
             {notifications.map(NotificationEl)}
-            <Link to="/notifications" className='nav-link text-primary p-1 text-center'>
+            <Link 
+            to="/notifications" 
+            className='alert alert-light nav-link btn btn-sm p-1 m-1 text-center'
+            onClick={openNotification}
+            >
                 View all
             </Link>
         </div>
     )
 }
+

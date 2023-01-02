@@ -15,6 +15,7 @@ import Collector from './pages/Collector/Collector';
 import Collectee from './pages/Collectee/Collectee';
 
 import { WithProtected, WithPublic } from './hooks/routeProtection';
+import Notification from './pages/Notification/Notification';
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
             <Route path='/collections' element={<Collectee user={user}/>}/>
             <Route path='/collector' element={<Collector/>}/>
             <Route path='/profile' element={<ProfileComponent/>}/>
+            <Route path='/notifications' element={<Notification user={user}/>}/>
             <Route path='/help' element={<HelpComponent/>} />
         </Routes>
 

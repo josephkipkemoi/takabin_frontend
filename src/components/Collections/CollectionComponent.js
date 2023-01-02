@@ -6,6 +6,8 @@ import { WithProtected } from '../../hooks/routeProtection';
 import UseRandomString from '../../hooks/useRandomString';
 import Header from '../Header/Header';
 import NavComponent from '../Navigation/NavComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 // import './Collections.css';
 
 const CollectionComponent = ({ user }) => {
@@ -26,63 +28,74 @@ const CollectionComponent = ({ user }) => {
     const CollectionElements = (collectionData, i) => {
 
         return (
-            <React.Fragment key={i}>
-                <div >
-                    <div className='alert alert-danger shadow-sm'>
-                        <p className='text-center'>Make payment once collector is within your premises</p>
-                    </div>
-                    <h6 className='text-dark'>
-                        Collection ID: {collectionData?.collection_code}
-                    </h6>
-                    <div className='row'>
-                        <div className='col'>
-                            <p>
-                                Service Cost: Kes. {Number(payment).toLocaleString()}/=
-                            </p>
-                            <p 
-                            className='text-dark'
-                            >
-                                Estimated Collection Time: {Boolean(collectionData?.estimate_collection_time) ? 
-                                collectionData.estimate_collection_time : 
-                                'Pending'}
-                            </p>
-                            <p>
-                                Payment Complete: No
-                            </p>
-                          
+            <React.Fragment key={i} >
+                <div className="m-2 p-3 bg-info mb-4 rounded shadow">
+                    <p className='d-flex align-items-center justify-content-center alert alert-info shadow-sm text-center'>
+                        <FontAwesomeIcon icon={faInfoCircle} size="lg"/>
+                        Make payment once collector is within your premises
+                    </p>
+                    <div className='card border-0 shadow'>
+                        <div className='card-header bg-primary'>
+                            <h6 className='text-white'>
+                                Collection ID: {collectionData?.collection_code}
+                            </h6>
                         </div>
-                        <div className='col'>
-                            <p 
+                        <div className='card-body'>
+                        <div className='row'>
+                            <div className='col'>
+                                <p>
+                                    Service Cost: Kes. {Number(payment).toLocaleString()}/=
+                                </p>
+                                <p 
                                 className='text-dark'
-                            >
-                                Collector: {Boolean(collectionData?.collector_id) ? 
-                                'Confirmed' : 
-                                'Pending Confirmation'}
-                            </p>
-                            <p 
-                                className='text-dark'
-                            >
-                                Collected: {Boolean(collectionData?.collected) ? 
-                                'Yes': 
-                                'Not Yet'}
-                            </p>
-                            <p 
-                                className='text-dark'
-                            >
-                                Collected At: {Boolean(collectionData?.collection_collected_at) ? 
-                                collectionData.collection_collected_at : 
-                                'Pending'}
-                            </p>
+                                >
+                                    Estimated Collection Time: {Boolean(collectionData?.estimate_collection_time) ? 
+                                    collectionData.estimate_collection_time : 
+                                    'Pending'}
+                                </p>
+                                <p>
+                                    Payment Complete: No
+                                </p>
+                            
+                            </div>
+                            <div className='col'>
+                                <p 
+                                    className='text-dark'
+                                >
+                                    Collector: {Boolean(collectionData?.collector_id) ? 
+                                    'Confirmed' : 
+                                    'Pending Confirmation'}
+                                </p>
+                                <p 
+                                    className='text-dark'
+                                >
+                                    Collected: {Boolean(collectionData?.collected) ? 
+                                    'Yes': 
+                                    'Not Yet'}
+                                </p>
+                                <p 
+                                    className='text-dark'
+                                >
+                                    Collected At: {Boolean(collectionData?.collection_collected_at) ? 
+                                    collectionData.collection_collected_at : 
+                                    'Pending'}
+                                </p>
+                            </div>
+                        </div>
+                        </div>
+                        <div className='d-flex card-footer bg-light'>
+                            <Button variant='light' className='w-100 m-1'>
+                                Cancel Collection
+                            </Button>
+                            <Button onClick={() => setPaymentModalShow(true)} className='w-100 m-1'>
+                                Make Payment
+                            </Button>   
                         </div>
                     </div>
-                
-                </div>
-                <Button variant='dark'>
-                    Cancel Collection
-                </Button>
-                <Button onClick={() => setPaymentModalShow(true)}>
-                    Make Payment
-                </Button>   
+                   
+                  
+          
+             
 
                    {paymentModalShow &&
                     <PaymentModal 
@@ -93,7 +106,7 @@ const CollectionComponent = ({ user }) => {
                         setPaymentModalShow={setPaymentModalShow}
                     />
                     }
-                             
+                </div>
             </React.Fragment>
         )
     }
@@ -108,7 +121,7 @@ const CollectionComponent = ({ user }) => {
         <>
        
                 <Container>
-                    <Card className='mt-4 border-0 shadow'>
+                    <Card className='mt-4 border-0 shadow mb-5'>
                         <Card.Header className='bg-primary text-white'>
                             Pending Collections
                         </Card.Header>

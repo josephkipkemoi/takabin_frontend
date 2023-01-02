@@ -3,6 +3,8 @@ import Collectee from "../../pages/Collectee/Collectee";
 import AuthComponent from "../Auth/AuthComponent";
 import ServiceComponent from "../ServicesOffered/ServiceComponent";
 import config from '../../config.json';
+import CollectionComponent from "../Collections/CollectionComponent";
+import CollecteeComponent from "../Collectee/CollecteeComponent";
 
 const LandingComponent = ({ user }) => {
     const [role, setRole] = useState(null)
@@ -15,9 +17,9 @@ const LandingComponent = ({ user }) => {
         <>
             {Boolean(user?.id) === false && <AuthComponent/>}
 
-            {/* {(Boolean(user?.id) && role === config.COLLECTEE_USER_ROLE) && <Collectee/>} */}
+            {(Boolean(user?.id) && role === config.COLLECTEE_USER_ROLE) && <CollecteeComponent/>}
             
-            <ServiceComponent/> 
+            {Boolean(user?.id) === false && <ServiceComponent/> } 
         </>
     )
 }
