@@ -1,19 +1,30 @@
-import { Navigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Await, Navigate, redirect } from "react-router-dom"
+import { AuthUser } from "./AuthUser";
 
-export const WithPublic = ({user, children}) => {
+export const WithPublic = ({isLoggedIn, children}) => {
 
-  if(Boolean(user?.id) === true) {
+  if(isLoggedIn) {
     return <Navigate to="/" replace />
    }
   
   return children
 }
 
-export const WithProtected = ({user, children}) => {
-
-  if(Boolean(user?.id) === false) {
-    return <Navigate to="/login" replace />
-   }
+export const WithProtected = ({children, isLoggedIn}) => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false)
+  // const checkUserToken = () => {
+  //   const user = JSON.parse(localStorage.getItem('user'))?.authorization
+  //   console.log(user)
+  // }
   
-    return children
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      return redirect('/login')
+    }
+
+  }, [isLoggedIn])
+   // return <WrappedComponent/>
+  return children
 };

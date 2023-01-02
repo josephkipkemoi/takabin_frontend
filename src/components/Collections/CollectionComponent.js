@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Container, Modal } from 'react-bootstrap';
+import { Navigate } from 'react-router-dom';
+import { WithProtected } from '../../hooks/routeProtection';
 import UseRandomString from '../../hooks/useRandomString';
 import Header from '../Header/Header';
 import NavComponent from '../Navigation/NavComponent';
 // import './Collections.css';
 
 const CollectionComponent = ({ user }) => {
+ 
     const [collectionData, setCollectionData] = useState([])
     const [paymentModalShow, setPaymentModalShow] = useState(false)
     const [payment, setPayment] = useState(125)
@@ -96,11 +99,14 @@ const CollectionComponent = ({ user }) => {
     }
 
     useEffect(() => {
-        fetchCollections(user?.id)
+      
+    fetchCollections(user?.id)
+
     }, [])
 
     return (
         <>
+       
                 <Container>
                     <Card className='mt-4 border-0 shadow'>
                         <Card.Header className='bg-primary text-white'>

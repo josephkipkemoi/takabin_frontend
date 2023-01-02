@@ -61,7 +61,7 @@ const CollecteeComponent = () => {
     }
 
     useEffect(() => {
-        const userId = JSON.parse(localStorage.getItem('auth-user'))?.id
+        const userId = JSON.parse(localStorage.getItem('user'))?.user?.id
         checkAddressStatus(userId)
         fetchCollections(userId)
     }, [addressUpdated])
@@ -123,7 +123,7 @@ const TimerElement = ({ estimateCollectionTime, collections }) => {
     const time = new Date(estimateCollectionTime)
     const [payment, setPayment] = useState(125)
     const [paymentModalShow, setPaymentModalShow] = useState(false)
-    console.log(collections)
+
     const CollectionElements = (n, i) => {
         return (
             <div className="mb-3 bg-primary shadow rounded">
@@ -168,7 +168,7 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
     const [serviceId, setServiceId] = useState(null)
 
     const handleRequest = async () => {
-        const user_id = JSON.parse(localStorage.getItem('auth-user')).id
+        const user_id = JSON.parse(localStorage.getItem('user'))?.user?.id
         const collection_id = UseRandomString()
 
       

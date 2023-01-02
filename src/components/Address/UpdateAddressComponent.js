@@ -30,7 +30,7 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
     }
 
     useEffect(() => {
-        const user_id = JSON.parse(localStorage.getItem('auth-user')).id
+        const user_id = JSON.parse(localStorage.getItem('user'))?.user?.id
         setAddressDetails(prev => ({...prev, user_id}))
     }, [])
     

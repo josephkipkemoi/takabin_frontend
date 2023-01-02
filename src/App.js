@@ -13,20 +13,24 @@ import SignupComponent from './components/Auth/SignupComponent';
 import HelpComponent from './components/Help/HelpComponent'
 import { WithProtected, WithPublic } from './hooks/routeProtection';
 import CollectionComponent from './components/Collections/CollectionComponent';
+import Collector from './pages/Collector/Collector';
 
 function App() {
 
   const [user, setUser] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(null)
 
   const checkIsAuth = async (token) => {
-
+    if(token?.token) {
+      setIsLoggedIn(true)
+    }
     try {
       const res = await axios.get('api/user', {
         headers: {
                   'Authorization': token?.type + " " + token?.token
           }
       })
-
+      setIsLoggedIn(true)
       setUser(res.data)
     } catch (error) {
       if(error.response.status === 401) {
@@ -50,11 +54,11 @@ function App() {
      
         <Routes>
             <Route path='/' element={<LandingComponent user={user}/>}/>
-            <Route path='/login' element={<WithPublic user={user}><LoginComponent /></WithPublic>}/>
-            <Route path='/register' element={<WithPublic user={user}><SignupComponent/></WithPublic>}/>
-            <Route path='/collections' element={<WithProtected user={user}><CollectionComponent user={user}/></WithProtected>}/>
-            <Route path='collector' element={<WithProtected user={user}></WithProtected>}/>
-            <Route path='/profile' element={<WithProtected user={user}><ProfileComponent/></WithProtected>}/>
+            <Route path='/login' element={<LoginComponent />}/>
+            <Route path='/register' element={<SignupComponent/>}/>
+            <Route path='/collections' element={<CollectionComponent user={user}/>}/>
+            <Route path='collector' element={<Collector/>}/>
+            <Route path='/profile' element={<ProfileComponent/>}/>
             <Route path='/help' element={<HelpComponent/>} />
         </Routes>
 

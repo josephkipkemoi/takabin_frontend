@@ -1,8 +1,6 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Modal } from "react-bootstrap"
-import Header from "../../components/Header/Header"
-import NavComponent from "../../components/Navigation/NavComponent"
 
 const Collector = () => {
     const [collectionCount, setCollectionCount] = useState(0)
@@ -11,7 +9,7 @@ const Collector = () => {
     const [userDetails, setUserDetails] = useState({})
 
     const fetchCollections = async () => {
-        const serviceId = JSON.parse(localStorage.getItem('auth-user')).service_id
+        const serviceId = JSON.parse(localStorage.getItem('user'))?.user?.service_id
         try {
             const res = await axios.get(`http://localhost:8000/api/v1/collections/view?service_id=${serviceId}`)
             setCollections(res.data.collections)
@@ -33,7 +31,7 @@ const Collector = () => {
     }
 
     const handleCollection =  async (user_id) => {
-        const collector_id = JSON.parse(localStorage.getItem('auth-user')).id
+        const collector_id = JSON.parse(localStorage.getItem('user'))?.user?.id
         try {
             const res = await axios.patch(`http://localhost:8000/api/v1/collections/${user_id}/patch`, {
                 collector_id,
@@ -46,7 +44,7 @@ const Collector = () => {
     }
 
     const CollectionElements = (n, i) => {
-       
+
         return (
             <React.Fragment key={i}>
                 <div className="bg-primary shadow-sm mb-3 p-3 d-flex align-items-center justify-content-between">
@@ -73,7 +71,7 @@ const Collector = () => {
                 <div>
 
                 </div>
-                {(Boolean(addressDetails.id) && addressDetails.user_id === n.id) &&
+                {(Boolean(addressDetails.id) && addressDetails.user_id === n.user_id) &&
                         <AddressDetailsComponent
                         addressDetails={addressDetails}
                         userDetails={userDetails}
@@ -89,7 +87,6 @@ const Collector = () => {
 
     return (
         <>
-            <Header/>
             <div className="container mt-4">
                 <div className="card border-0">
                     <div className="card-header bg-primary text-white">
@@ -106,9 +103,7 @@ const Collector = () => {
                         }
                     </div>
                 </div>              
-            
             </div>
-            <NavComponent/>
         </>
      
      )
