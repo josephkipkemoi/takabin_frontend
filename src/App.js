@@ -11,9 +11,11 @@ import axios from './lib/Axios';
 import ProfileComponent from './components/Profile/ProfileComponent';
 import SignupComponent from './components/Auth/SignupComponent';
 import HelpComponent from './components/Help/HelpComponent'
-import { WithProtected, WithPublic } from './hooks/routeProtection';
-import CollectionComponent from './components/Collections/CollectionComponent';
 import Collector from './pages/Collector/Collector';
+import Collectee from './pages/Collectee/Collectee';
+
+import { WithProtected, WithPublic } from './hooks/routeProtection';
+
 
 function App() {
 
@@ -56,8 +58,8 @@ function App() {
             <Route path='/' element={<LandingComponent user={user}/>}/>
             <Route path='/login' element={<LoginComponent />}/>
             <Route path='/register' element={<SignupComponent/>}/>
-            <Route path='/collections' element={<CollectionComponent user={user}/>}/>
-            <Route path='collector' element={<Collector/>}/>
+            <Route path='/collections' element={<Collectee user={user}/>}/>
+            <Route path='/collector' element={<Collector/>}/>
             <Route path='/profile' element={<ProfileComponent/>}/>
             <Route path='/help' element={<HelpComponent/>} />
         </Routes>

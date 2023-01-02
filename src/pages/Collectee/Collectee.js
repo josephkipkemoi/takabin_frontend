@@ -1,8 +1,8 @@
-import CollecteeComponent from "../../components/Collectee/CollecteeComponent"
-const Collectee = () => {
+import CollectionComponent from "../../components/Collections/CollectionComponent"
+const Collectee = ({ user }) => {
     return (
         <div className="d-flex justify-content-center">
-            <CollecteeComponent/>          
+            <CollectionComponent user={user}/>          
         </div>
     )
 }
