@@ -27,14 +27,14 @@ export default function NotificationComponent({ userId }) {
 
         let channel = pusher.subscribe('notifications-channel');
         channel.bind(`notifications-channel`, function(data) {
-            fetchNotifications(userId   )
+           
         alert(JSON.stringify(data));
         });
     }
 
     useEffect(() => {
-        handleWebsockets(window.Pusher, userId)
-       
+        // handleWebsockets(window.Pusher, userId)
+        fetchNotifications(userId)
     }, [userId])
     return (
         <>

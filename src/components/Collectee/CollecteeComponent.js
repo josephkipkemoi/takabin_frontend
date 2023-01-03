@@ -12,8 +12,11 @@ import {
     faDotCircle, 
     faEyeLowVision, 
     faLocation, 
-    faMousePointer 
+    faMousePointer,
+    faTools,
+    faCheckCircle
 } from "@fortawesome/free-solid-svg-icons"
+import './Collectee.css'
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -178,6 +181,7 @@ const TimerElement = ({ collections }) => {
 }
 
 const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
+    const [errors, setErrors] = useState([])
     const [services, setServices] = useState([])
     const [serviceId, setServiceId] = useState(null)
 
@@ -185,17 +189,25 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
         const user_id = JSON.parse(localStorage.getItem('user'))?.user?.id
         const collection_id = UseRandomString()
 
-      
-        const res = await axios.post("http://localhost:8000/api/v1/collections", {
-            user_id,
-            collection_code: collection_id,
-            service_id: serviceId
-        })
-
-        if(res.status === 201) {
-            setCollectionRequested(true)
-            closeServiceModal()
+        try {
+            const res = await axios.post("http://localhost:8000/api/v1/collections", {
+                user_id,
+                collection_code: collection_id,
+                service_id: serviceId
+            })
+    
+            if(res.status === 201) {
+                setCollectionRequested(true)
+                closeServiceModal()
+            }
+        } catch (error) {
+            console.error(error)
+            if(error.response.status === 422) {
+                setErrors(['Please select at least one field'])
+            }
         }
+      
+     
     }
 
     const handleService = (id) => {
@@ -213,10 +225,10 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
         return (
             <React.Fragment key={i}>
                 <button 
-                    className="btn btn-primary w-100 p-3 mb-2"
+                    className="btn btn-outline-success m-3 shadow card-box"
                     onClick={() => handleService(n.id)}
                 >
-                    {n.service}
+                        {n.service}
                 </button>
             </React.Fragment>
         )
@@ -228,15 +240,26 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
 
     return (
         <Modal show={show}>
-            <Modal.Header>
-                Select Service
+            <Modal.Header className="bg-primary text-white fw-bold d-flex justify-content-start align-items-center">
+                <FontAwesomeIcon icon={faTools} style={{ marginRight: 8 }}/>
+               <p>Service</p> 
             </Modal.Header>
-            <Modal.Body>
+            {errors.length > 0 && 
+            errors.map((err, i) => 
+            <span key={i} className="d-block alert alert-danger w-100">
+                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: 4 }} />
+                {err}
+            </span>)}
+            <Modal.Body className="custom-row">                
+               
                 {services.length > 0 && services.map(ServicesElements)}
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-danger" onClick={closeServiceModal}>Close</button>
-                <button className="btn btn-primary" onClick={handleRequest}>Confirm</button>
+                <button className="btn" onClick={closeServiceModal}>Close</button>
+                <button className="btn btn-primary rounded-0 d-flex align-items-center" onClick={handleRequest}>
+                    <FontAwesomeIcon icon={faCheckCircle} style={{ marginRight: 4 }} />
+                    Confirm
+                </button>
             </Modal.Footer>
         </Modal>
     )

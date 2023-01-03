@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 // import './Address.css'
-import { Card, Modal } from 'react-bootstrap'
-
+import {  Modal } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSave, faLocation, faLocationArrow } from '@fortawesome/free-solid-svg-icons'
 const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
     const [addressDetails, setAddressDetails] = useState({
         user_id: null,
@@ -36,8 +37,11 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
     
     return (
         <Modal show={modalShow}>
-           <Modal.Header className='bg-primary text-white'>
-                <h5>Update Address</h5>
+           <Modal.Header className='bg-primary text-white fw-bold'>
+                <span>
+                    <FontAwesomeIcon icon={faLocationArrow} style={{ marginRight: 4 }} />
+                    Address
+                </span>
            </Modal.Header>
            <Modal.Body>
             <form onSubmit={e => e.preventDefault()}>
@@ -46,7 +50,7 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
                     <input 
                         type="text" 
                         placeholder='County' 
-                        className='form-control p-3'
+                        className='form-control p-2'
                         name='county'
                         value={county}
                         onChange={handleChange}
@@ -57,7 +61,7 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
                     <input 
                         type="text" 
                         placeholder='Sub-County' 
-                        className='form-control p-3'
+                        className='form-control p-2'
                         name='sub_county'
                         value={sub_county}
                         onChange={handleChange}
@@ -71,7 +75,7 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
                             type="text" 
                             placeholder='Estate / Apartment' 
                             name='estate'
-                            className='form-control p-3'
+                            className='form-control p-2'
                             value={estate}
                             required
                             onChange={handleChange}
@@ -82,7 +86,7 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
                             type="text" 
                             placeholder='House Number' 
                             name='house_number'
-                            className='form-control p-3'
+                            className='form-control p-2'
                             value={house_number}
                             onChange={handleChange}
                             required
@@ -97,11 +101,12 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
                         Cancel
                     </button>
                     <button 
-                        className='btn btn-primary w-100 m-1 shadow ' 
+                        className='btn btn-primary w-100 m-1 shadow-sm rounded-0 p-2' 
                         onClick={submitAddress}
                         type="submit"
                     >
-                        Update
+                        <FontAwesomeIcon icon={faSave} style={{ marginRight: 4 }}/>
+                        Save
                     </button>
                 </div>         
              

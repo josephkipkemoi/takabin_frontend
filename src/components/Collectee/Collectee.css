@@ -1,12 +1,11 @@
 p {
     margin: 0;
 }
-.collection-block {
-min-width: 260px;
+.card-box {
+    min-width: 120px;
+    min-height: 120px;
 }
-.coll-child-left {
-    margin-left: 1rem;
-}
-.coll-child-right {
-    margin-right: .4rem;
+.custom-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
