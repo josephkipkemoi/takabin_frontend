@@ -54,17 +54,18 @@ function App() {
         {Boolean(user?.id) === true && <TopNavigation/>}
 
         <Header/>  
-     
-        <Routes>
-            <Route path='/' element={<LandingComponent user={user}/>}/>
-            <Route path='/login' element={<LoginComponent />}/>
-            <Route path='/register' element={<SignupComponent/>}/>
-            <Route path='/collections' element={<Collectee user={user}/>}/>
-            <Route path='/collector' element={<Collector/>}/>
-            <Route path='/profile' element={<ProfileComponent/>}/>
-            <Route path='/notifications' element={<Notification user={user}/>}/>
-            <Route path='/help' element={<HelpComponent/>} />
-        </Routes>
+        <div className='body-components'>
+          <Routes>
+              <Route path='/' element={<LandingComponent user={user}/>}/>
+              <Route path='/login' element={<LoginComponent />}/>
+              <Route path='/register' element={<SignupComponent/>}/>
+              <Route path='/collections' element={<Collectee user={user}/>}/>
+              <Route path='/collector' element={<Collector/>}/>
+              <Route path='/profile' element={<ProfileComponent/>}/>
+              <Route path='/notifications' element={<Notification user={user}/>}/>
+              <Route path='/help' element={<HelpComponent/>} />
+          </Routes>
+        </div>
 
         <NavComponent user={user} /> 
 

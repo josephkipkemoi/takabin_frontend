@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Card } from "react-bootstrap"
+import { Card, Carousel } from "react-bootstrap"
 import axios from "../../lib/Axios"
 import './Services.css'
 
@@ -17,24 +17,45 @@ const ServiceComponent = () => {
     }
 
     const ServiceElements = (n, i) => {
+        console.log(n)
         return (
-            <Card key={i} className="m-1 bg-light shadow rounded-pill">
-                <h6 className="text-dark text-center p-2 service-card">{n.service}</h6>
-            </Card>
+            <Carousel.Item
+                interval={1000}
+                key={i}
+            >
+                <Card className="border-primary">
+                    <Card.Header className="bg-primary text-white">
+                        
+                        <h6 className="text-center p-2 service-card">{n.service}</h6>
+                    </Card.Header>
+                    <Card.Body className="bg-white p-4 service-body">
+                        <img src={n.service_img_url} className="img-fluid"/>
+                        <p>{n.service_description}</p>
+                    </Card.Body>
+                </Card>
+            </Carousel.Item>
         )
     }
     useEffect(() => {
         fetchServices()
     }, [])
     return (
-        <div className="d-flex justify-content-center text-white m-5">
-            <div className="text-center">
-                <h5 className="text-white">Our services</h5>
-                <div className="d-flex mt-2">
-                    {services.map(ServiceElements)}
-                </div>
-            </div>          
-        </div>
+        <Carousel 
+            className="p-4" 
+            controls={false} 
+            indicators={false}
+        >
+            
+            {services.map(ServiceElements)}
+        </Carousel>
+        // <div className="d-flex justify-content-center text-white m-5">
+        //     <div className="text-center">
+        //         <h5 className="text-white">Our services</h5>
+        //         <div className="d-flex mt-2">
+        //             {services.map(ServiceElements)}
+        //         </div>
+        //     </div>          
+        // </div>
     )
 }
 

@@ -5,6 +5,9 @@
 h6 {
     margin: 0;
     line-height: 24px;
-    cursor: pointer;
-   
+    cursor: pointer;   
+}
+
+.service-body {
+    min-height: 160px;
 }
