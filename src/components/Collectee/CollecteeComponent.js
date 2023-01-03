@@ -14,7 +14,8 @@ import {
     faLocation, 
     faMousePointer,
     faTools,
-    faCheckCircle
+    faCheckCircle,
+    faHandPointUp
 } from "@fortawesome/free-solid-svg-icons"
 import './Collectee.css'
 
@@ -105,14 +106,16 @@ const CollecteeComponent = () => {
 
             <div className="d-flex flex-column align-items-center">
                
-                <div className="mb-2 mt-2">
+                <div className="m-4">
                     <button 
-                        className="d-flex flex-column align-items-center rounded-pill btn btn-warning text-white fw-bold shadow btn-lg p-5" 
+                        className="d-flex flex-column justify-content-center align-items-center rounded-circle btn text-white fw-bold shadow btn-lg p-5" 
                         onClick={handleRequest} 
-                    >
-                        <Spinner variant="light" animation="grow" size="s">                    
-                        </Spinner>
-                    <span className="mt-5">Press to Request</span>
+                        style={{ width: '240px', height: '240px' }}
+                    >                     
+                    <span className="d-flex flex-column justify-content-center align-items-center">
+                        <FontAwesomeIcon icon={faHandPointUp} style={{ width: '60px', height: '60px' }}/>
+                        <span className="mt-3">Press to Request</span> 
+                    </span>
                     </button> 
                 </div>
 

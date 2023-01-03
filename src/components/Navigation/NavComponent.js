@@ -3,6 +3,8 @@ import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import './Nav.css'
 import config from '../../config.json'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRightToBracket, faLongArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 const NavComponent = ({ user }) => {
     const [userRole, setUserRole] = useState(null)
@@ -32,10 +34,12 @@ const NavComponent = ({ user }) => {
                 Profile
             </Link>
             {Boolean(user?.id) ?   
-            <Button onClick={handleLogout}>
+            <Button onClick={handleLogout} className="rounded-0 shadow-sm d-flex align-items-center">
+                <FontAwesomeIcon icon={faLongArrowLeft} style={{ marginRight: 8 }}/>
                 Logout
             </Button> :
-            <Link to="/login" className='btn'>
+            <Link to="/login" className='btn d-flex align-items-center'>
+                <FontAwesomeIcon icon={ faRightToBracket } style={{ marginRight: 8 }}/>
               Login
             </Link>
             }         
