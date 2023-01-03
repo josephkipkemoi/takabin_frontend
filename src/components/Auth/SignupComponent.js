@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react"
 import validateNumber from "../../hooks/validateNumber";
 import axios from 'axios'
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import config from '../../config.json';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from "react-bootstrap";
 
 const SignupComponent = () => {
+
+    const [isUserLoading, setIsUserLoading] = useState(null)
+    const [errors, setErrors] = useState([])
     const [userRole, setUserRole] = useState(config.COLLECTEE_USER_ROLE)
     const [services, setServices] = useState([])
 
@@ -70,10 +76,12 @@ const SignupComponent = () => {
         setError('')
         
         try {
+            setIsUserLoading(true)
             const res = await axios
             .post(`${userRole === config.COLLECTOR_USER_ROLE ? collectorRegistrationUrl : userRegistrationUrl}`, userDetails)
           
             if(res.status === 200) {
+                setIsUserLoading(false)
                 localStorage.setItem('user', JSON.stringify(res.data))
                 window.location.href = '/'
             }
@@ -81,6 +89,10 @@ const SignupComponent = () => {
            
         } catch (error) {
             console.error(error)
+            setIsUserLoading(false)
+            if(error.status !== 500) {
+                setErrors(['Number already registered, Please login to continue'])
+            }
         }
        
     }
@@ -110,6 +122,9 @@ const SignupComponent = () => {
             setUserDetails(prev => ({...prev, role_id: res.data.id}))
         } catch (error) {
             console.error(error)
+            if(error.status !== 422) {
+                setErrors(Object.values(error.response.data.errors).flat())
+             }
         }   
        
     }
@@ -131,6 +146,12 @@ const SignupComponent = () => {
                     <h2>Sign Up</h2>
                 </div>
                 <div className="card-body">
+                    {errors.length > 0 && 
+                    errors.map((err, i) => 
+                    <span key={i} className="d-block alert alert-danger">
+                        <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: 4 }} />
+                        {err}
+                    </span>) }
                     <div className="d-flex align-items-center justify-content-end mb-3">
                         <input id="user_role" type="checkbox" className="m-1" value={userRole} onChange={handleCheckbox}/>
                         <label htmlFor="user_role">Check box if you are a collector</label>
@@ -201,8 +222,22 @@ const SignupComponent = () => {
                                         <button className="btn" onClick={handlePreviousStep}>
                                             Go Back
                                         </button>
-                                        <button className="btn btn-primary" onClick={handleSubmit}>
-                                            Sign Up
+                                        <button 
+                                            className="btn btn-primary" 
+                                            onClick={handleSubmit} 
+                                            disabled={isUserLoading}
+                                        >
+                                            {isUserLoading ?
+                                                <>
+                                                    <Spinner size="sm" animation="grow" style={{ marginRight: 4 }}/>
+                                                    Loading...
+                                                </>
+                                                :
+                                                <>
+                                                   <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: 4 }}/>
+                                                    Sign Up
+                                                </>
+                                            }                                         
                                         </button>
                                     </>                     
                                 }
