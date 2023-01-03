@@ -37,32 +37,33 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
     return (
         <Modal show={modalShow}>
            <Modal.Header className='bg-primary text-white'>
-           <h3>Address Information</h3>
-
+                <h5>Update Address</h5>
            </Modal.Header>
            <Modal.Body>
-                <div className='row mb-3'>
+            <form onSubmit={e => e.preventDefault()}>
+            <div className='row mb-3'>
                 <div className='col'>
                     <input 
                         type="text" 
                         placeholder='County' 
-                        className='form-control'
+                        className='form-control p-3'
                         name='county'
                         value={county}
                         onChange={handleChange}
+                        required
                     />
                 </div>
                 <div className='col'>
-                        <input 
-                            type="text" 
-                            placeholder='Sub-County' 
-                            className='form-control'
-                            name='sub_county'
-                            value={sub_county}
-                            onChange={handleChange}
-                        />
-                </div>
-                 
+                    <input 
+                        type="text" 
+                        placeholder='Sub-County' 
+                        className='form-control p-3'
+                        name='sub_county'
+                        value={sub_county}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>                 
                 </div>
                 <div className='row mb-3'>
                     <div className='col'>
@@ -70,8 +71,9 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
                             type="text" 
                             placeholder='Estate / Apartment' 
                             name='estate'
-                            className='form-control'
+                            className='form-control p-3'
                             value={estate}
+                            required
                             onChange={handleChange}
                         />
                     </div>
@@ -80,20 +82,32 @@ const UpdateAddressComponent = ({ modalShow,setModalShow }) => {
                             type="text" 
                             placeholder='House Number' 
                             name='house_number'
-                            className='form-control'
+                            className='form-control p-3'
                             value={house_number}
                             onChange={handleChange}
+                            required
                         />
                     </div>
-                </div>
-            
-            <button className='btn btn-primary w-100' onClick={submitAddress}>Update</button>
-           </Modal.Body>
+                </div>   
+                <div className='d-flex'>
+                    <button 
+                        className='btn w-100 m-1' 
+                        onClick={() => setModalShow(false)}
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        className='btn btn-primary w-100 m-1 shadow ' 
+                        onClick={submitAddress}
+                        type="submit"
+                    >
+                        Update
+                    </button>
+                </div>         
              
-
+            </form>               
+           </Modal.Body>            
         </Modal>
-       
-     
     )
 }
 

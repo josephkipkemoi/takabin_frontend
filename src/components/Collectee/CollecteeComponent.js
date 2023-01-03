@@ -129,8 +129,7 @@ const CollecteeComponent = () => {
     )
 }
 
-const TimerElement = ({ estimateCollectionTime, collections }) => {
-    const time = new Date(estimateCollectionTime)
+const TimerElement = ({ collections }) => {
     const [payment, setPayment] = useState(125)
     const [paymentModalShow, setPaymentModalShow] = useState(false)
 
@@ -153,26 +152,13 @@ const TimerElement = ({ estimateCollectionTime, collections }) => {
                     </div>                  
                     <div className="coll-child-right d-flex align-items-center">
                        <button className="btn btn-sm m-1 rounded-pill shadow-sm text-secondary">Cancel</button>
-                        <button className="btn btn-primary btn-sm m-1 rounded-pill shadow">
+                        <Link to="/collections" className="btn btn-primary btn-sm m-1 rounded-pill shadow">
                             <FontAwesomeIcon icon={faEyeLowVision} />
                             View
-                        </button>
+                        </Link>
                     </div>                   
                 </div>
-                    {/* <div className="m-1"> 
-                        <p>
-                            Item requested for collection, you will be contacted {estimateCollectionTime ? 
-                            `by ${time.getDate() + '-' + time.getMonth() + '-' + time.getFullYear()}` : 
-                            'soon'}
-                        </p>
-                        <p className="text-center">This service will cost <b>Kes. {payment}/=</b></p>
-                    </div>                   
-                    <div className="timer-cancel d-flex justify-content-center mt-3">
-                        <button className="btn btn-danger rounded shadow m-1">Cancel Collection</button>
-                        <Link to="/collections" className="btn btn-light rounded shadow m-1">View Status</Link>
-                        <button className="btn btn-success m-1" onClick={() => setPaymentModalShow(true)}>Make Payment</button>
-                    </div> */}
-                    {paymentModalShow &&
+                {paymentModalShow &&
                     <PaymentModal
                         payment={payment}
                         setPaymentModalShow={setPaymentModalShow}
@@ -184,8 +170,8 @@ const TimerElement = ({ estimateCollectionTime, collections }) => {
         )
     }
     return (
-            <div className="p-1 rounded-0 mt-3 mb-5">
-                <h6 className="btn text-light">View pending collections</h6>
+            <div className="rounded shadow mt-3 mb-5 bg-info p-3">
+                <h6 className="text-center shadow-sm fw-bold alert alert-primary rounded-0 p-2">Active collections</h6>
                 {collections.map(CollectionElements)}          
             </div>      
     )
