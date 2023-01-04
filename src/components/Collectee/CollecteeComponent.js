@@ -19,6 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import './Collectee.css'
 import ToastElement from "../../elements/ToastElement"
+import { useGetServiceByIdQuery } from "../../hooks/api/services"
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -141,9 +142,10 @@ const TimerElement = ({ collections }) => {
     const [paymentModalShow, setPaymentModalShow] = useState(false)
 
     const CollectionElements = (n, i) => {
+        const data = useGetServiceByIdQuery(n.service_id)
         return (
             <div key={i} className="mb-2">
-                <ToastElement/>
+                <ToastElement service={data?.data?.service}/>
             {/* <div 
                 key={i}
                 className="d-flex flex-row align-items-center justify-content-center text-white p-1"
@@ -178,7 +180,7 @@ const TimerElement = ({ collections }) => {
         )
     }
     return (
-            <div style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
+            <div style={{ position: 'absolute', top: '5rem', left: '1rem' }}>
                 {collections.map(CollectionElements)}          
             </div>      
     )
