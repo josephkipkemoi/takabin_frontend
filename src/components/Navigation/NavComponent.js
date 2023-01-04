@@ -20,7 +20,7 @@ const NavComponent = ({ user }) => {
     }, [user?.id])
     
     return (    
-        <div className='nav d-flex justify-content-around'>
+        <div className='nav d-flex justify-content-around bg-light'>
             <Link className='btn' to="/">
                 Home
             </Link>

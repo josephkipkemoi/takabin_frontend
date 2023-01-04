@@ -9,10 +9,11 @@
 }
 .img-holder {
     position: relative;
+    height: 620px;
+    width: auto;
+    overflow: hidden;
 }
 .img-landing {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+   position: absolute;
+   width: 100%;
 }
