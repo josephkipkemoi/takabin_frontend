@@ -109,7 +109,7 @@ const CollecteeComponent = () => {
                
                 <div className="m-4">
                     <button 
-                        className="d-flex flex-column justify-content-center align-items-center rounded-circle btn text-white fw-bold shadow btn-lg p-5" 
+                        className="d-flex flex-column justify-content-center align-items-center rounded-circle btn text-white fw-bold shadow btn-lg p-5 shake-btn" 
                         onClick={handleRequest} 
                         style={{ width: '240px', height: '240px' }}
                     >                     

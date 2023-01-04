@@ -50,7 +50,9 @@ function App() {
   }, [])
 
   return (
-    <>
+    <>    
+        <NavComponent user={user} /> 
+
         {Boolean(user?.id) === true && <TopNavigation/>}
 
         <Header/>  
@@ -67,7 +69,6 @@ function App() {
           </Routes>
         </div>
 
-        <NavComponent user={user} /> 
 
     </>
   );

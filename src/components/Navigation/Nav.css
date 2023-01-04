@@ -1,7 +1,7 @@
 .nav {
     padding: .75rem;
     overflow: hidden;
-    position: fixed;
-    bottom: 0;
+    position: relative;
+    top: 0;
     width: 100%;
 }

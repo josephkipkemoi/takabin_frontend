@@ -23,3 +23,24 @@
 .img-container-signup img {
      width: 520px;
 }
+.span-line { 
+    z-index: 5;
+}
+.span-line::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 25%;
+    left: 0;
+    border: 1px solid lightblue;
+    margin-top: 12px;
+}
+.span-line::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 25%;
+    right: 0;
+    border: 1px solid lightblue;
+    margin-top: 12px;
+}
