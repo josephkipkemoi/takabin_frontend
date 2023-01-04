@@ -7,3 +7,12 @@
 .auth-link-name {
     margin-left: 6px;
 }
+.img-holder {
+    position: relative;
+}
+.img-landing {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}

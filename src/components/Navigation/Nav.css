@@ -1,8 +1,8 @@
 .nav {
-    position: sticky;
-    bottom: 0;
     background-color: #fff;
-    width: 100%;
     padding: 1rem;
     overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
