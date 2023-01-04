@@ -18,7 +18,7 @@ const CollectionComponent = ({ user }) => {
 
     const fetchCollections = async (userId) => {
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1/users/${userId}/collectee/collections/pending`)
+            const res = await axios.get(`http://localhost:8000/api/v1/users/${userId}/collectee/collections?collected=0`)
             setCollectionData(res.data)
         } catch (error) {
             console.error(error?.message)

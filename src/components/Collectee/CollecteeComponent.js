@@ -33,7 +33,7 @@ const CollecteeComponent = () => {
 
     const fetchCollections = async (userId) => {
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1/users/${userId}/collectee/collections/pending`)
+            const res = await axios.get(`http://localhost:8000/api/v1/users/${userId}/collectee/collections?collected=0`)
             setCollections(res.data)
 
             if(res.data.length > 0) {

@@ -17,3 +17,9 @@
    position: absolute;
    width: 100%;
 }
+.img-container-signup {
+    position: relative;
+}
+.img-container-signup img {
+     width: 520px;
+}
