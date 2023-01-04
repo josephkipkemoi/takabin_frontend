@@ -16,6 +16,7 @@ import Collectee from './pages/Collectee/Collectee';
 
 import { WithProtected, WithPublic } from './hooks/routeProtection';
 import Notification from './pages/Notification/Notification';
+import FooterComponent from './components/Footer/FooterComponent';
 
 
 function App() {
@@ -69,7 +70,7 @@ function App() {
           </Routes>
         </div>
 
-
+        <FooterComponent/>
     </>
   );
 }
