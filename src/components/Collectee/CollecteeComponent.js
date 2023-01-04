@@ -18,6 +18,7 @@ import {
     faHandPointUp
 } from "@fortawesome/free-solid-svg-icons"
 import './Collectee.css'
+import ToastElement from "../../elements/ToastElement"
 
 const CollecteeComponent = () => {
     const [error, setError] = useState('')
@@ -141,8 +142,9 @@ const TimerElement = ({ collections }) => {
 
     const CollectionElements = (n, i) => {
         return (
-            <div>
-            <div 
+            <div key={i} className="mb-2">
+                <ToastElement/>
+            {/* <div 
                 key={i}
                 className="d-flex flex-row align-items-center justify-content-center text-white p-1"
             >
@@ -171,13 +173,12 @@ const TimerElement = ({ collections }) => {
                         paymentModalShow={paymentModalShow}
                     />
                 }
-            </div>
+            </div> */}
             </div>
         )
     }
     return (
-            <div className="rounded shadow mt-3 mb-5 bg-info p-3">
-                <h6 className="text-center shadow-sm fw-bold alert alert-primary rounded-0 p-2">Active collections</h6>
+            <div style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
                 {collections.map(CollectionElements)}          
             </div>      
     )
