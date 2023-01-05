@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import validateNumber from "../../hooks/validateNumber";
-import axios from 'axios'
+import axios from '../../lib/Axios'
 import { Link } from "react-router-dom";
 import config from '../../config.json';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,7 +28,7 @@ const SignupComponent = () => {
 
     const [signupSteps, setSignupStep] = useState(1)
 
-    const handleSteps = () => {
+    const handleSteps = async () => {
         if(Boolean(phone_number) === false) {
             setError('Mobile number field is required')
             return false
@@ -44,6 +44,12 @@ const SignupComponent = () => {
             return false
         }
 
+        const res = await axios.get(`api/v1/validate?type=user&phone_number=${phone_number}`)
+       
+        if(res.data.user === 1) {
+          return setError('User already registered, Login to continue')
+        }
+        
         setSignupStep(prev => prev+=1)
     }
 
