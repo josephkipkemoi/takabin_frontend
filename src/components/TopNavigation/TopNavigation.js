@@ -4,38 +4,38 @@ import { useEffect, useState } from 'react';
 import NotificationComponent from './NotificationComponent';
 import './TopNavigation.css';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { useGetUserBalanceQuery } from '../../hooks/api/balance';
+import { Spinner } from 'react-bootstrap';
 
-const TopNavigation = () => {
-    const [userId, setUserId] = useState(null)
-
-    const [balance, setBalance] = useState({
-        amount: null,
-        bonus: null
-    })
-
-    const { amount, bonus } = balance
+const TopNavigation = ({ user }) => {
     
-    const fetchBalance = async ( user_id ) => {
-        const res = await axios.get(`http://localhost:8000/api/v1/users/${user_id}/balance`)
-        const { amount, bonus } = res?.data
-        setBalance(prev => ({...prev , amount, bonus}))
-    }
-    useEffect(() => {
-        const user_id = JSON.parse(localStorage.getItem('user'))?.user.id
-        Boolean(user_id) && fetchBalance(user_id)
-        setUserId(user_id)
-    }, [])
     return (
         <div className='d-flex justify-content-end mt-1' style={{ marginRight: '6px' }}>
             <div className='d-flex align-items-start'>
-                <div className='d-flex flex-column align-items-start text-white'>
-                    <span>
-                        Balance <FontAwesomeIcon icon={faRefresh}/> Kes{Number(amount).toLocaleString()}.00                        
-                    </span>
-                    <span>Bonus <FontAwesomeIcon icon={faRefresh}/>  Kes{Number(bonus).toLocaleString()}.00</span>
-                </div>
-                <NotificationComponent userId={userId}/>
+                <BalanceComponent  userId={user.id}/>
+                <NotificationComponent userId={user.id}/>
             </div>        
+        </div>
+    )
+}
+
+const BalanceComponent = ({  userId }) => {
+    const {data, isLoading, error} = useGetUserBalanceQuery(userId)
+
+    if(error) {
+        return <span className='alert alert-danger'>Error!</span>
+    }
+
+    if(isLoading) {
+        return <Spinner animation='grow' />
+    }
+
+    return (
+        <div className='d-flex flex-column align-items-start text-white'>
+            <span>
+                Balance <FontAwesomeIcon icon={faRefresh}/> Kes{Number(data?.amount).toLocaleString()}.00                        
+            </span>
+            <span>Bonus <FontAwesomeIcon icon={faRefresh}/>  Kes{Number(data?.bonus).toLocaleString()}.00</span>
         </div>
     )
 }
