@@ -9,21 +9,24 @@ import LoginImg from '../../assets/img/log.jpg';
 const LoginComponent = () => {
     const [errors, setErrors] = useState([])
     const [isUserLoading, setIsUserLoading] = useState(null)
+    const [remember, setRemember] = useState(false)
 
     const [userDetails, setUserDetails] = useState({
         phone_number: '',
-        password: ''
+        password: '',
     })
 
     const { phone_number, password } = userDetails
 
     const handleChange = (e) => setUserDetails(prev => ({...prev, [e.target.name] : e.target.value}))
  
+    const handleRemember = (e) => setRemember(e.target.checked)
+
     const handleSubmit = async () => {
         setIsUserLoading(true)
         try {
 
-            const res = await axios.post('http://localhost:8000/api/v1/login', userDetails)
+            const res = await axios.post(`http://localhost:8000/api/v1/login?remember=${remember}`, userDetails)
 
             if(res.status === 200) {
                setIsUserLoading(false)
@@ -88,7 +91,7 @@ const LoginComponent = () => {
                             />                          
                         </div>
                         <div>
-                            <input type="checkbox" id="remember_me"/>
+                            <input type="checkbox" id="remember_me" onChange={handleRemember}/>
                             <label htmlFor="remember_me" style={{ marginLeft: 8 }}>Remember Me</label>
                         </div>
                   
