@@ -141,7 +141,7 @@ const SignupComponent = () => {
 
     return (
         <div className="bg-light row mt-3 p-5 gx-5 gy-3">
-        <div className="col-lg-3 col-md-3 col-sm-12 bg-white rounded shadow d-flex align-items-center justify-content-center">
+        <div className="col-lg-3 col-md-4 col-sm-12 bg-white rounded shadow d-flex align-items-center justify-content-center">
             <div className="card border-0">
                 <div className="card-header bg-white border-0 text-dark">
                     <h3>Sign Up</h3>
@@ -272,7 +272,7 @@ const SignupComponent = () => {
                 </div>
             </div>
         </div>
-        <div className="col-lg-9 col-md-9 col-sm-12">
+        <div className="col-lg-9 col-md-8 col-sm-12">
             <div className="img-container-signup">
                 <img src={RecycleImg} alt="signup_img"/>
             </div>

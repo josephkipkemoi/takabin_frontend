@@ -52,9 +52,9 @@ function App() {
 
   return (
     <>    
-        <NavComponent user={user} /> 
-        
-        {Boolean(user?.id) === true && <TopNavigation/>}
+          <NavComponent user={user} /> 
+
+        {Boolean(user?.id) === true && <TopNavigation/>}    
 
         <Header/>  
 

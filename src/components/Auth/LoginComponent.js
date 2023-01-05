@@ -43,7 +43,7 @@ const LoginComponent = () => {
 
     return (
         <div className="bg-light row mt-3 p-5 gx-5 gy-3">
-            <div className="col-lg-3 col-md-3 col-sm-12 bg-white rounded shadow d-flex align-items-center justify-content-center">
+            <div className="col-lg-3 col-md-4 col-sm-12 bg-white rounded shadow d-flex align-items-center justify-content-center">
                 <div className="card border-0 bg-white">
                     <div className="card-header bg-white text-dark fw-bold border-0">
                        <h3>Login</h3> 
@@ -142,7 +142,7 @@ const LoginComponent = () => {
                     </div>
                 </div>         
             </div>
-            <div className="col-lg-9 col-md-9 col-sm-12">
+            <div className="col-lg-9 col-md-8 col-sm-12">
                 <div className="img-holder">
                     <img src={LoginImg} className="img-fluid rounded-0 img-landing" alt="login-img"/>
                 </div>

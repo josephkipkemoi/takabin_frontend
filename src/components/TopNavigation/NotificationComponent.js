@@ -39,11 +39,11 @@ export default function NotificationComponent({ userId }) {
     return (
         <>
             <button 
-                className='btn btn-light rounded-circle shadow m-3'
+                className='btn shadow-sm text-white'
                 onClick={openNotification}
             >
-                <FontAwesomeIcon icon={faBell}/>
-                <small className='notification-count fw-bold'>{notifications.length}</small>
+                <FontAwesomeIcon size='lg' icon={faBell}/>
+                <small className='fw-bold'>{notifications.length}</small>
             </button>
             {notificationOpen && <NotificationElement notifications={notifications} openNotification={openNotification}/>}
         </>

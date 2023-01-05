@@ -31,3 +31,11 @@ p {
     90% { transform: translate(1px, 2px) rotate(0deg); }
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
+
+@media screen and (min-width: 990px) {
+    .toast-absolute {
+        position: absolute;
+        top: 5rem;
+        left: 1rem;
+    }
+  }

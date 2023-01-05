@@ -1,5 +1,5 @@
-.top-navigation {
+.notification-body{
     position: absolute;
-    top: 0;
+    top: 5rem;
     right: 0;
 }

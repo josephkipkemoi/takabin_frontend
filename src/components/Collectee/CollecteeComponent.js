@@ -180,7 +180,7 @@ const TimerElement = ({ collections }) => {
         )
     }
     return (
-            <div style={{ position: 'absolute', top: '5rem', left: '1rem' }}>
+            <div className="toast-absolute" style={{  }}>
                 {collections.map(CollectionElements)}          
             </div>      
     )

@@ -24,8 +24,8 @@ const TopNavigation = () => {
         setUserId(user_id)
     }, [])
     return (
-        <div className='m-1 float-end'>
-            <div className='d-flex align-items-center'>
+        <div className='d-flex justify-content-end mt-1' style={{ marginRight: '6px' }}>
+            <div className='d-flex align-items-start'>
                 <div className='d-flex flex-column align-items-start text-white'>
                     <span>Balance Kes: {Number(amount).toLocaleString()}.00</span>
                     <span>Bonus Kes: {Number(bonus).toLocaleString()}.00</span>
