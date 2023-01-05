@@ -14,16 +14,17 @@ import HelpComponent from './components/Help/HelpComponent'
 import Collector from './pages/Collector/Collector';
 import Collectee from './pages/Collectee/Collectee';
 
-import { WithProtected, WithPublic } from './hooks/routeProtection';
 import Notification from './pages/Notification/Notification';
 import FooterComponent from './components/Footer/FooterComponent';
+import { useGetServicesQuery } from './hooks/api/services';
 
 
 function App() {
 
   const [user, setUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(null)
-
+  const service = useGetServicesQuery()
+ 
   const checkIsAuth = async (token) => {
     if(token?.token) {
       setIsLoggedIn(true)
@@ -47,12 +48,12 @@ function App() {
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('user'))?.authorization
 
-    checkIsAuth(token)
+    checkIsAuth(token)    
   }, [])
 
   return (
     <>    
-          <NavComponent user={user} /> 
+        <NavComponent user={user} /> 
 
         {Boolean(user?.id) === true && <TopNavigation/>}    
 

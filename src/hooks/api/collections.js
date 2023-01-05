@@ -8,13 +8,13 @@ export const CollectionApi = createApi({
     }),
     endpoints: (builder) => ({
         getUncollectedCollections: builder.query({
-            query: ({ user_id, collected }) => `users/${user_id}/collectee/collections?collected=${collected}`
+            query: ( user_id, collected ) => `users/${user_id}/collectee/collections?collected=${collected}`
         })
        
     })
 })
 
 export const {
-    useGetUncollectedCollectionsQuery
+    useGetUncollectedCollectionsQuery,
 } = CollectionApi
 

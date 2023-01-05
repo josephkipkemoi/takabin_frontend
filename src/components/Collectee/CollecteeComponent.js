@@ -4,13 +4,10 @@ import UpdateAddressComponent from "../Address/UpdateAddressComponent"
 import "./Collectee.css"
 import UseRandomString from "../../hooks/useRandomString"
 import { Modal, Spinner } from "react-bootstrap"
-import { Link } from "react-router-dom"
 import { PaymentModal } from "../Collections/CollectionComponent"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { 
     faInfoCircle, 
-    faDotCircle, 
-    faEyeLowVision, 
     faLocation, 
     faMousePointer,
     faTools,
@@ -20,34 +17,24 @@ import {
 import './Collectee.css'
 import ToastElement from "../../elements/ToastElement"
 import { useGetServiceByIdQuery } from "../../hooks/api/services"
+import { useGetUncollectedCollectionsQuery } from "../../hooks/api/collections"
 
-const CollecteeComponent = () => {
-    const [error, setError] = useState('')
-    const [collectionRequested, setCollectionRequested] = useState(false)
-    const [addressUpdated, setAddressUpdated] = useState(false)
-    const [updateAddress, setUpdateAddress] = useState(false)
-    const [estimateCollectionTime, setEstimateCollectionTime] = useState(null)
+const CollecteeComponent = ({ user }) => {
+    const [errors, setError] = useState('')
+    const [addressUpdated, setAddressUpdated] = useState(true)
     const [modalShow, setModalShow] = useState(false)
     const [serviceModalShow, setServiceModalShow] = useState(false)
-    const [collections, setCollections] = useState([])
 
-    const closeServiceModal = () => setServiceModalShow(false)
+    const { data, refetch, isLoading, error } = useGetUncollectedCollectionsQuery(user?.id, false)
 
-    const fetchCollections = async (userId) => {
-        try {
-            const res = await axios.get(`http://localhost:8000/api/v1/users/${userId}/collectee/collections?collected=0`)
-            setCollections(res.data)
-
-            if(res.data.length > 0) {
-                setEstimateCollectionTime(res.data.estimate_collection_time)
-                setCollectionRequested(true)
-            }
-        } catch (error) {
-            console.error(error?.message)
-        }
-   
+    if(error) {
+        return <span className="alert alert-danger">Error!</span>
     }
 
+    if(isLoading) {
+        return <Spinner animation="grow" />
+    }
+    const closeServiceModal = () => setServiceModalShow(false)
     
     const checkAddressStatus = async (userId) => {
         try {
@@ -74,19 +61,19 @@ const CollecteeComponent = () => {
         setModalShow(true)
     }
 
-    useEffect(() => {
-        const userId = JSON.parse(localStorage.getItem('user'))?.user?.id
-        checkAddressStatus(userId)
-        fetchCollections(userId)
-    }, [addressUpdated])
+    // useEffect(() => {
+    //     const userId = JSON.parse(localStorage.getItem('user'))?.user?.id
+    //     checkAddressStatus(userId)
+       
+    // }, [addressUpdated])
 
     return (
         <div className="d-flex justify-content-center flex-column align-items-center text-white mt-3">
             
-            {error && 
+            {errors && 
                 <p className="d-flex align-items-center alert alert-danger shadow rounded-0">
                     <FontAwesomeIcon icon={faLocation} className="m-1"/>
-                    {error}
+                    {errors}
                     <button 
                     className="btn btn-danger m-1" 
                     onClick={(handleUpdateAddress)}
@@ -101,8 +88,9 @@ const CollecteeComponent = () => {
             <ServicesModal 
                 show={serviceModalShow} 
                 closeServiceModal={closeServiceModal}
-                setCollectionRequested={setCollectionRequested}
-            />}
+                refetch={refetch}
+            />
+            }
 
             {modalShow && <UpdateAddressComponent modalShow={modalShow} setModalShow={setModalShow}/>}
 
@@ -122,71 +110,48 @@ const CollecteeComponent = () => {
                 </div>
 
                 <div className="">
-                {collectionRequested &&
-                    <TimerElement
-                        estimateCollectionTime={estimateCollectionTime}
-                        collections={collections}
-                    />               
-                }    
+                   
+                   <UncollectedCollectionsComponent
+                            data={data}
+                        />               
+                    
                 </div>
-               
-
+            
             </div>
             
         </div>
     )
 }
 
-const TimerElement = ({ collections }) => {
+const UncollectedCollectionsComponent = ({ data }) => {
     const [payment, setPayment] = useState(125)
     const [paymentModalShow, setPaymentModalShow] = useState(false)
 
     const CollectionElements = (n, i) => {
-        const data = useGetServiceByIdQuery(n.service_id)
+    
+        // const service = useGetServiceByIdQuery(n.service_id)
         return (
             <div key={i} className="mb-2">
-                <ToastElement service={data?.data?.service}/>
-            {/* <div 
-                key={i}
-                className="d-flex flex-row align-items-center justify-content-center text-white p-1"
-            >
-                <div>
-                    <FontAwesomeIcon icon={faInfoCircle} className="btn btn-lg text-light shadow-sm rounded-pill"/>
-                </div>
-                <div className="p-1 shadow bg-light collection-block d-flex align-items-center justify-content-between rounded-pill">
-                    <div className="coll-child-left">
-                        <small className="text-dark fw-bold d-flex align-items-center">
-                            <FontAwesomeIcon icon={faDotCircle} size="sm" className="text-warning" style={{ marginRight: 4 }}/>
-                            Active   
-                        </small>
-                    </div>                  
-                    <div className="coll-child-right d-flex align-items-center">
-                       <button className="btn btn-sm m-1 rounded-pill shadow-sm text-secondary">Cancel</button>
-                        <Link to="/collections" className="btn btn-primary btn-sm m-1 rounded-pill shadow">
-                            <FontAwesomeIcon icon={faEyeLowVision} />
-                            View
-                        </Link>
-                    </div>                   
-                </div>
-                {paymentModalShow &&
+                <ToastElement code={n.collection_code} service={n.service_id}/>
+                {/* {paymentModalShow &&
                     <PaymentModal
                         payment={payment}
                         setPaymentModalShow={setPaymentModalShow}
                         paymentModalShow={paymentModalShow}
                     />
-                }
-            </div> */}
+                } */}
             </div>
         )
     }
+
     return (
-            <div className="toast-absolute" style={{  }}>
-                {collections.map(CollectionElements)}          
+            <div className="toast-absolute">
+                {data?.map(CollectionElements)}          
             </div>      
     )
 }
 
-const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
+const ServicesModal = ({ show, closeServiceModal, refetch }) => {
     const [errors, setErrors] = useState([])
     const [services, setServices] = useState([])
     const [serviceId, setServiceId] = useState(null)
@@ -203,7 +168,7 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
             })
     
             if(res.status === 201) {
-                setCollectionRequested(true)
+                refetch()
                 closeServiceModal()
             }
         } catch (error) {
@@ -219,7 +184,6 @@ const ServicesModal = ({ show, closeServiceModal,setCollectionRequested }) => {
     const handleService = (id) => {
         setServiceId(id)
     }
-
 
     const fetchServices = async () => {
         const res = await axios.get("http://localhost:8000/api/v1/services")

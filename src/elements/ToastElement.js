@@ -1,9 +1,9 @@
-import { faDotCircle, faEyeLowVision } from "@fortawesome/free-solid-svg-icons"
+import { faDotCircle, faEyeLowVision, faInfoCircle, faMoneyBill } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Toast } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
-const ToastElement = ({ service }) => {
+const ToastElement = ({ service, code }) => {
     return (
      <Toast >
         <Toast.Header className="d-flex justify-content-between">
@@ -13,15 +13,19 @@ const ToastElement = ({ service }) => {
             </span>
         </Toast.Header>
         <Toast.Body className="d-flex align-items-center justify-content-between toast-body">
-            <div>
+            <div >
+                <FontAwesomeIcon className="text-secondary" size="lg" icon={faInfoCircle} style={{ marginRight: 4 }} />
                 <span className="text-dark">
-                    Service: {service}
+                    Service code: {service}-{code}
                 </span>
             </div>
             <div className="coll-child-right d-flex align-items-center">
-                <button className="btn btn-sm m-1 rounded shadow-sm text-secondary">Cancel</button>
-                    <Link to="/collections" className="btn btn-primary btn-sm m-1 rounded shadow">
-                        <FontAwesomeIcon icon={faEyeLowVision} style={{ marginRight: 8 }}/>
+                    <button className="btn btn-success btn-sm m-1 rounded shadow-sm">
+                        <FontAwesomeIcon icon={faMoneyBill} style={{ marginRight: 6 }} />
+                        Pay
+                    </button>
+                    <Link to="/collections" className="btn btn-primary btn-sm rounded shadow">
+                        <FontAwesomeIcon icon={faEyeLowVision} style={{ marginRight: 6 }}/>
                         View
                     </Link>
             </div>  
