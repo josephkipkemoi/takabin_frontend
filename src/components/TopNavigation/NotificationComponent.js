@@ -6,12 +6,17 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 export default function NotificationComponent({ userId }) {
-    const [notifications, setNotifications] = useState([])
+    const [unreadNotificationCount, setUnreadNotificationCount] = useState(null)
+    const [unreadNotifications, setUnreadNotifications] = useState([])
+    const [readNotifications, setReadNotifications] = useState([])
+
     const [notificationOpen, setNotificationOpen] = useState(false)
 
     const fetchNotifications = async (userId) => {
         const res = await axios.get(`api/v1/users/${userId}/notifications`)
-        setNotifications(res.data)
+        setUnreadNotificationCount(res.data.unread_notifications_count)
+        setReadNotifications(res.data.read_notifications)
+        setUnreadNotifications(res.data.unread_notifications)
     }
 
     const openNotification = () => {
@@ -43,31 +48,58 @@ export default function NotificationComponent({ userId }) {
                 onClick={openNotification}
             >
                 <FontAwesomeIcon size='lg' icon={faBell}/>
-                <small className='fw-bold'>{notifications.length}</small>
+                <small className='fw-bold'>{unreadNotificationCount}</small>
             </button>
-            {notificationOpen && <NotificationElement notifications={notifications} openNotification={openNotification}/>}
+            {notificationOpen && 
+            <NotificationElement 
+                readNotifications={readNotifications}
+                unreadNotifications={unreadNotifications} 
+                openNotification={openNotification}
+                userId={userId}
+            />
+            }
         </>
        
     )
 }
 
-const NotificationElement = ({ notifications, openNotification }) => {
-    
+const NotificationElement = ({ readNotifications, unreadNotifications , openNotification,userId }) => {
+
+    const handleAllRead = async () => {
+        const res = await axios.post(`api/v1/users/${userId}/notifications/read`)
+       
+    }
     const NotificationEl = (n, i) => {
         return (
             <React.Fragment key={i}>
-                <Link to="/notifications" className='nav-link p-2 alert alert-secondary rounded-0' onClick={openNotification}>
+                <Link 
+                    to={`/notifications?bonus=${n.data.bonus_url}`}
+                    className={`nav-link p-2 alert alert-${Boolean(n.read_at) ? 'light': 'danger'} rounded-0`}
+                    onClick={openNotification}
+                >
                     {n?.data?.message}
-                </Link>
+                </Link>     
             </React.Fragment>
         )
     }
     return (
         <div className='bg-white p-1'>
-            <button className='alert alert-light btn btn-sm p-2 w-100'>
+            <button className='alert alert-light btn btn-sm p-2 w-100' onClick={handleAllRead}>
                 Mark all as read
             </button>
-            {notifications.map(NotificationEl)}
+    
+            {unreadNotifications.length > 0 &&
+            <>
+                <small  className='d-block'>Unread Notifications</small>
+                <hr className='text-secondary'/>
+                {unreadNotifications.map(NotificationEl)}
+            </>}
+            {readNotifications.length > 0 && 
+                <>
+                <small className='d-block'>Read Notifications</small>
+                {readNotifications.map(NotificationEl)}
+                </>
+            }      
             <Link 
             to="/notifications" 
             className='alert alert-light nav-link btn btn-sm p-1 m-1 text-center'
