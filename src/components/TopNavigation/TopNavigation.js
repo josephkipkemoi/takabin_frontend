@@ -1,7 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import NotificationComponent from './NotificationComponent';
 import './TopNavigation.css';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 const TopNavigation = () => {
     const [userId, setUserId] = useState(null)
@@ -27,8 +29,10 @@ const TopNavigation = () => {
         <div className='d-flex justify-content-end mt-1' style={{ marginRight: '6px' }}>
             <div className='d-flex align-items-start'>
                 <div className='d-flex flex-column align-items-start text-white'>
-                    <span>Balance Kes: {Number(amount).toLocaleString()}.00</span>
-                    <span>Bonus Kes: {Number(bonus).toLocaleString()}.00</span>
+                    <span>
+                        Balance <FontAwesomeIcon icon={faRefresh}/> Kes{Number(amount).toLocaleString()}.00                        
+                    </span>
+                    <span>Bonus <FontAwesomeIcon icon={faRefresh}/>  Kes{Number(bonus).toLocaleString()}.00</span>
                 </div>
                 <NotificationComponent userId={userId}/>
             </div>        
