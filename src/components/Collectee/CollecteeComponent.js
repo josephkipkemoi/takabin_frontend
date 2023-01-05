@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import axios from "axios"
+import axios from "../../lib/Axios"
 import UpdateAddressComponent from "../Address/UpdateAddressComponent"
 import "./Collectee.css"
 import UseRandomString from "../../hooks/useRandomString"
@@ -21,7 +21,6 @@ import { useGetUncollectedCollectionsQuery } from "../../hooks/api/collections"
 
 const CollecteeComponent = ({ user }) => {
     const [errors, setError] = useState('')
-    const [addressUpdated, setAddressUpdated] = useState(true)
     const [modalShow, setModalShow] = useState(false)
     const [serviceModalShow, setServiceModalShow] = useState(false)
 
@@ -35,37 +34,22 @@ const CollecteeComponent = ({ user }) => {
         return <Spinner animation="grow" />
     }
     const closeServiceModal = () => setServiceModalShow(false)
-    
-    const checkAddressStatus = async (userId) => {
-        try {
-            const res = await axios.get(`http://localhost:8000/api/v1/addresses/users/${userId}`)
-            if(res?.data?.address?.id) {
-                setAddressUpdated(true)
-            }
-        } catch (error) {
-            console.error(error)
-        }
-      
-    }
 
-    const handleRequest = () => {
-        if(addressUpdated === false) {
+    const handleRequest = async () => {
+   
+        const res = await axios.get(`api/v1/validate?type=address&phone_number=${user.phone_number}`)
+
+        if(Boolean(res.data.address_updated) === false) {
             setError('Update your address location for easy collection by')
             return false
         }
-
+        setError('')
         setServiceModalShow(true)
     }
 
     const handleUpdateAddress = () => {
         setModalShow(true)
     }
-
-    // useEffect(() => {
-    //     const userId = JSON.parse(localStorage.getItem('user'))?.user?.id
-    //     checkAddressStatus(userId)
-       
-    // }, [addressUpdated])
 
     return (
         <div className="d-flex justify-content-center flex-column align-items-center text-white mt-3">
