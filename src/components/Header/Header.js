@@ -5,16 +5,14 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
     return (
-        <header className='app-header'>
-            <h1 className='fw-bold text-white m-1 d-flex flex-column'>
-                <FontAwesomeIcon size='lg' icon={faTrashCan} className="bg-none p-4"/>
-                {config.APP_NAME}
+        <header  className='d-flex flex-column justify-content-center align-items-center text-white m-3'>
+            <h1 className='d-flex align-items-center'>
+                <FontAwesomeIcon size='lg' icon={faTrashCan} />
+               <span className='app-name'>{config.APP_NAME}</span>           
             </h1>
-            <p className='text-white mt-3'>
-                <i>
-                    {config.APP_SLOGAN}
-                </i>
-            </p>
+            <i className='mt-2'>
+                {config.APP_SLOGAN}
+            </i>
         </header>
     )
 }

@@ -39,7 +39,7 @@ export default function NotificationComponent({ userId }) {
     return (
         <>
             <button 
-                className='btn btn-light rounded-circle shadow m-3 notification-body'
+                className='btn btn-light rounded-circle shadow m-3'
                 onClick={openNotification}
             >
                 <FontAwesomeIcon icon={faBell}/>
@@ -63,7 +63,7 @@ const NotificationElement = ({ notifications, openNotification }) => {
         )
     }
     return (
-        <div className='notification-element bg-white p-1'>
+        <div className='bg-white p-1'>
             <button className='alert alert-light btn btn-sm p-2 w-100'>
                 Mark all as read
             </button>

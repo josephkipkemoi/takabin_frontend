@@ -1,4 +1,8 @@
-
-.app-header h1 {
-    letter-spacing: 4px;
+.app-name {
+    margin-left: 6px;
+}
+h1 {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 1000;
 }

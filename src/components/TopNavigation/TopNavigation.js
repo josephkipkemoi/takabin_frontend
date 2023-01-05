@@ -24,12 +24,14 @@ const TopNavigation = () => {
         setUserId(user_id)
     }, [])
     return (
-        <div className='top-navigation m-1 d-flex align-items-center'>
-            <div className='d-flex flex-column align-items-start text-white'>
-                <span>Balance Kes: {Number(amount).toLocaleString()}.00</span>
-                <span>Bonus Kes: {Number(bonus).toLocaleString()}.00</span>
-            </div>
-            <NotificationComponent userId={userId}/>
+        <div className='m-1 float-end'>
+            <div className='d-flex align-items-center'>
+                <div className='d-flex flex-column align-items-start text-white'>
+                    <span>Balance Kes: {Number(amount).toLocaleString()}.00</span>
+                    <span>Bonus Kes: {Number(bonus).toLocaleString()}.00</span>
+                </div>
+                <NotificationComponent userId={userId}/>
+            </div>        
         </div>
     )
 }

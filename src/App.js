@@ -53,10 +53,11 @@ function App() {
   return (
     <>    
         <NavComponent user={user} /> 
-
+        
         {Boolean(user?.id) === true && <TopNavigation/>}
 
         <Header/>  
+
         <div className='body-components'>
           <Routes>
               <Route path='/' element={<LandingComponent user={user}/>}/>

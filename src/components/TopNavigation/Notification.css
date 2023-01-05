@@ -2,9 +2,9 @@
     position: relative;
 }
 .notification-element {
-    position: absolute;
-    top: 3.7rem;
-    right: 0;
+    /* position: absolute;
+    top: 5.7rem;
+    right: 0; */
     min-width: 220px;
 }
 .notification-count {
