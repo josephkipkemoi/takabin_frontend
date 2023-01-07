@@ -16,15 +16,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import './Collectee.css'
 import ToastElement from "../../elements/ToastElement"
-import { useGetServiceByIdQuery } from "../../hooks/api/services"
-import { useGetUncollectedCollectionsQuery } from "../../hooks/api/collections"
+import { useGetCollectionsQuery } from "../../hooks/api/collections"
 
 const CollecteeComponent = ({ user }) => {
     const [errors, setError] = useState('')
     const [modalShow, setModalShow] = useState(false)
     const [serviceModalShow, setServiceModalShow] = useState(false)
 
-    const { data, refetch, isLoading, error } = useGetUncollectedCollectionsQuery(user?.id, false)
+    const { data, refetch, isLoading, error } = useGetCollectionsQuery({user_id: user?.id, collected: false})
 
     if(error) {
         return <span className="alert alert-danger">Error!</span>
@@ -96,7 +95,7 @@ const CollecteeComponent = ({ user }) => {
                 <div className="">
                    
                    <UncollectedCollectionsComponent
-                            data={data}
+                            data={data?.data}
                         />               
                     
                 </div>
@@ -113,7 +112,6 @@ const UncollectedCollectionsComponent = ({ data }) => {
 
     const CollectionElements = (n, i) => {
     
-        // const service = useGetServiceByIdQuery(n.service_id)
         return (
             <div key={i} className="mb-2">
                 <ToastElement code={n.collection_code} service={n.service_id}/>
@@ -127,7 +125,7 @@ const UncollectedCollectionsComponent = ({ data }) => {
             </div>
         )
     }
-
+console.log(data)
     return (
             <div className="toast-absolute">
                 {data?.map(CollectionElements)}          

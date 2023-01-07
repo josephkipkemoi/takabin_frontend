@@ -35,7 +35,6 @@ const BalanceComponent = ({  userId }) => {
             <span>
                 Balance <FontAwesomeIcon icon={faRefresh}/> Kes{Number(data?.amount).toLocaleString()}.00                        
             </span>
-            <span>Bonus <FontAwesomeIcon icon={faRefresh}/>  Kes{Number(data?.bonus).toLocaleString()}.00</span>
         </div>
     )
 }
